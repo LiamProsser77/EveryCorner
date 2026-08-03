@@ -1,219 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EveryCorner - Your Community, Your Corner</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>EveryCorner - Your Community, Your Corner</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #ffffff;
-            color: #222;
-        }
+<style>
 
-        header {
-            background: #ffffff;
-            color: #222;
-            padding: 70px 20px;
-            text-align: center;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        header img {
-            width: 220px;
-            height: 220px;
-            object-fit: contain;
-            border-radius: 35px;
-            margin-bottom: 20px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    color: #222;
+}
 
-        h1 {
-            font-size: 52px;
-            margin: 10px 0;
-            color: #7b1e3a;
-        }
 
-        .tagline {
-            font-size: 26px;
-            margin-bottom: 20px;
-            color: #008c8c;
-        }
+/* TOP HEADER */
 
-        header p {
-            max-width: 700px;
-            margin: 15px auto;
-            font-size: 19px;
-        }
+header {
+    background: white;
+    text-align: center;
+    padding: 70px 20px;
+}
 
-        .buttons a {
-            display: inline-block;
-            margin: 15px 8px;
-            padding: 15px 35px;
-            background: #008c8c;
-            color: white;
-            text-decoration: none;
-            border-radius: 35px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+header img {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    border-radius: 35px;
+    margin-bottom: 20px;
+}
 
-        .buttons a:hover {
-            background: #7b1e3a;
-            color: white;
-        }
+h1 {
+    font-size: 54px;
+    margin: 10px 0;
+    color: #7b1e3a;
+}
 
-        section {
-            max-width: 1000px;
-            margin: auto;
-            padding: 55px 20px;
-            text-align: center;
-        }
+.tagline {
+    font-size: 27px;
+    color: #008c8c;
+    margin-bottom: 20px;
+}
 
-        h2 {
-            color: #7b1e3a;
-            font-size: 34px;
-        }
+header p {
+    max-width: 700px;
+    margin: 15px auto;
+    font-size: 19px;
+}
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-top: 35px;
-        }
 
-        .card {
-            background: #ffffff;
-            width: 280px;
-            padding: 30px;
-            border-radius: 20px;
-            border-top: 6px solid #008c8c;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
+/* BUTTONS */
 
-        .card h3 {
-            color: #008c8c;
-        }
+.buttons a {
 
-        .feature {
-            background: #fafafa;
-            border-radius: 25px;
-            padding: 35px;
-            border-left: 8px solid #7b1e3a;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
+    display: inline-block;
+    margin: 15px 8px;
+    padding: 15px 35px;
 
-        footer {
-            background: #7b1e3a;
-            color: white;
-            text-align: center;
-            padding: 25px;
-        }
+    background: #008c8c;
+    color: white;
 
-    </style>
+    text-decoration: none;
+    border-radius: 35px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+
+.buttons a:hover {
+
+    background: #7b1e3a;
+
+}
+
+
+/* TEAL BANNER */
+
+
+.teal-banner {
+
+    background: #008c8c;
+    color: white;
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+}
+
+
+.teal-banner h2 {
+
+    color: white;
+    font-size: 38px;
+
+}
+
+
+.teal-banner p {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    font-size: 20px;
+
+}
+
+
+/* SECTIONS */
+
+
+section {
+
+    max-width: 1000px;
+
+    margin: auto;
+
+    padding: 55px 20px;
+
+    text-align: center;
+
+}
+
+
+h2 {
+
+    color: #7b1e3a;
+
+    font-size: 34px;
+
+}
+
+
+/* CARDS */
+
+
+.cards {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+
+    margin-top: 35px;
+
+}
+
+
+
+.card {
+
+    background: white;
+
+    width: 280px;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    border-top: 6px solid #008c8c;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+}
+
+
+
+.card h3 {
+
+    color: #008c8c;
+
+}
+
+
+/* FEATURE */
+
+
+.feature {
+
+    background: #fafafa;
+
+    border-radius: 25px;
+
+    padding: 35px;
+
+    border-left: 8px solid #7b1e3a;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+}
+
+
+/* FOOTER */
+
+
+footer {
+
+    background: #7b1e3a;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 25px;
+
+}
+
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-    <img src="everycorner.png" alt="EveryCorner Logo">
 
-    <h1>EveryCorner</h1>
+<img src="everycorner.png" alt="EveryCorner Logo">
 
-    <p class="tagline">
-        Every community has a corner.
-    </p>
 
-    <p>
-        A social network where groups become the profile.
-        Create your Corner, invite your people, and grow together.
-    </p>
+<h1>EveryCorner</h1>
 
-    <div class="buttons">
-        <a href="#">Create Your Corner</a>
-        <a href="#">Sign In</a>
-    </div>
+
+<p class="tagline">
+
+Every community has a corner.
+
+</p>
+
+
+<p>
+
+A social network where groups become the profile.
+
+Create your Corner, invite your people, and grow together.
+
+</p>
+
+
+<div class="buttons">
+
+<a href="#">Create Your Corner</a>
+
+<a href="#">Sign In</a>
+
+</div>
+
 
 </header>
 
 
+
+<section class="teal-banner">
+
+
+<h2>Build Your Corner</h2>
+
+
+<p>
+
+Bring your community together, grow your followers,
+
+and create a place where everyone belongs.
+
+</p>
+
+
+</section>
+
+
+
 <section>
+
 
 <h2>What is EveryCorner?</h2>
 
+
 <p>
+
 EveryCorner changes social media by focusing on communities instead
+
 of individual profiles. Your group is your identity. Friends, teams,
+
 clubs, and communities can build a Corner that everyone follows together.
+
 </p>
+
 
 </section>
 
 
+
 <section>
+
 
 <h2>How EveryCorner Works</h2>
 
+
 <div class="cards">
 
+
 <div class="card">
+
 <h3>Create a Corner</h3>
+
 <p>
+
 Make a shared space for your friends, community, team, or organization.
+
 </p>
+
 </div>
 
 
+
 <div class="card">
+
 <h3>Invite Members</h3>
+
 <p>
+
 Bring people together and let everyone help build the Corner.
+
 </p>
+
 </div>
+
 
 
 <div class="card">
+
 <h3>Grow Together</h3>
+
 <p>
+
 Your Corner gets followers as a group instead of individuals competing.
+
 </p>
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
+
+
 
 
 <section>
 
+
 <div class="feature">
+
 
 <h2>A New Way To Connect</h2>
 
+
 <p>
+
 No popularity contests. No single person being the whole identity.
+
 EveryCorner is about communities, friendships, and shared experiences.
+
 </p>
+
 
 </div>
 
+
 </section>
+
+
 
 
 <footer>
 
+
 <p>
+
 © 2026 EveryCorner. All rights reserved.
+
 </p>
+
 
 </footer>
 
 
 </body>
+
 </html>
