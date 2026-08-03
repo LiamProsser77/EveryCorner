@@ -6,78 +6,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Your Corner - EveryCorner</title>
+<title>EveryCorner - Your Corner</title>
 
 <style>
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
+
 
 body {
+
     margin:0;
     font-family:Arial,sans-serif;
-    background:#ffffff;
+    background:white;
     color:#222;
+
 }
 
 
-/* HEADER */
+/* TOP */
 
 header {
 
-    background:#7b1e3a;
-    color:white;
+    background:white;
     text-align:center;
-    padding:25px;
+    padding:30px;
 
 }
 
 
 header img {
 
-    width:90px;
+    width:100px;
+}
+
+
+header h1 {
+
+    color:#7b1e3a;
 
 }
 
 
-/* PROFILE */
+
+/* PROFILE AREA */
 
 
-.profile-container {
+.container {
 
     max-width:900px;
-
     margin:auto;
 
 }
 
 
 
-/* BANNER */
-
-
 .banner {
 
-    height:250px;
+    height:260px;
 
     background:#008c8c;
+
+    border-radius:0 0 25px 25px;
 
     background-size:cover;
 
     background-position:center;
 
-    border-radius:0 0 25px 25px;
-
 }
 
 
 
-.profile-card {
+
+.profile {
 
     background:white;
 
-    margin-top:-60px;
+    margin:-70px 20px 0;
 
     position:relative;
 
@@ -85,22 +91,20 @@ header img {
 
     border-radius:25px;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
-
     text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
 
 }
 
 
 
-/* PROFILE IMAGE */
-
 
 .profile-picture {
 
-    width:140px;
+    width:150px;
 
-    height:140px;
+    height:150px;
 
     border-radius:50%;
 
@@ -108,28 +112,24 @@ header img {
 
     border:6px solid white;
 
-    margin-top:-100px;
-
 }
 
 
 
-h1 {
+h2 {
 
     color:#7b1e3a;
 
 }
 
 
-h2 {
+.teal {
 
     color:#008c8c;
 
 }
 
 
-
-/* BUTTONS */
 
 
 button {
@@ -140,7 +140,7 @@ button {
 
     border:none;
 
-    padding:12px 25px;
+    padding:13px 25px;
 
     border-radius:30px;
 
@@ -148,8 +148,9 @@ button {
 
     margin:5px;
 
-}
+    font-weight:bold;
 
+}
 
 
 button:hover {
@@ -159,29 +160,33 @@ button:hover {
 }
 
 
-/* SETTINGS */
 
 
-.settings {
+
+.box {
 
     background:#fafafa;
 
-    padding:25px;
+    margin:30px 20px;
 
-    border-radius:20px;
+    padding:30px;
 
-    margin-top:25px;
+    border-radius:25px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 
 }
 
 
+
 input, textarea {
+
 
     width:100%;
 
     padding:12px;
 
-    margin:8px 0;
+    margin:10px 0;
 
     border-radius:10px;
 
@@ -190,10 +195,10 @@ input, textarea {
 }
 
 
-/* POSTS */
 
 
 .post {
+
 
     background:white;
 
@@ -205,11 +210,13 @@ input, textarea {
 
     border-left:5px solid #008c8c;
 
+
 }
 
 
 
 footer {
+
 
     background:#7b1e3a;
 
@@ -217,19 +224,22 @@ footer {
 
     text-align:center;
 
-    padding:20px;
+    padding:25px;
 
     margin-top:50px;
+
 
 }
 
 
 </style>
 
+
 </head>
 
 
 <body>
+
 
 
 <header>
@@ -238,32 +248,40 @@ footer {
 
 <h1>EveryCorner</h1>
 
-<p>Your Corner</p>
+<p class="teal">
+Your community. Your Corner.
+</p>
+
 
 </header>
 
 
 
-<div class="profile-container">
+
+<div class="container">
 
 
 
-<div class="banner" id="banner">
+<div id="banner" class="banner">
 
 </div>
 
 
 
 
-<div class="profile-card">
+<div class="profile">
 
 
-<img id="profilePic" class="profile-picture" src="everycorner.png">
+<img 
+id="profilePic"
+class="profile-picture"
+src="everycorner.png">
 
 
-<h1 id="cornerName">
-Your Corner Name
-</h1>
+
+<h2 id="cornerName">
+Loading Corner...
+</h2>
 
 
 <p>
@@ -277,10 +295,9 @@ Add Friend
 </button>
 
 
-<button>
+<button onclick="showSettings()">
 Settings
 </button>
-
 
 
 </div>
@@ -288,10 +305,11 @@ Settings
 
 
 
-<div class="settings">
+
+<div class="box" id="settings">
 
 
-<h2>Profile Settings</h2>
+<h2>Corner Settings</h2>
 
 
 
@@ -299,7 +317,9 @@ Settings
 Upload Banner
 </label>
 
-<input type="file" onchange="uploadBanner(event)">
+<input 
+type="file"
+onchange="uploadBanner(event)">
 
 
 
@@ -307,20 +327,26 @@ Upload Banner
 Upload Profile Picture
 </label>
 
-<input type="file" onchange="uploadProfile(event)">
+
+<input
+type="file"
+onchange="uploadProfile(event)">
 
 
 
 <label>
-Corner Name
+Change Corner Name
 </label>
 
-<input id="nameInput" placeholder="Enter Corner Name">
+
+<input
+id="nameInput"
+placeholder="New Corner Name">
 
 
 
 <button onclick="saveProfile()">
-Save Changes
+Save
 </button>
 
 
@@ -329,16 +355,21 @@ Save Changes
 
 
 
-<div class="settings">
+
+<div class="box">
 
 
 <h2>Create Post</h2>
 
 
-<textarea id="postText" placeholder="Share something..."></textarea>
+<textarea 
+id="postText"
+placeholder="Share something with your Corner...">
+</textarea>
 
 
-<button onclick="post()">
+
+<button onclick="createPost()">
 Post
 </button>
 
@@ -353,7 +384,10 @@ Post
 
 
 
+
+
 </div>
+
 
 
 
@@ -369,64 +403,15 @@ Post
 
 
 
+<script src="app.js"></script>
+
 
 <script>
 
 
-function uploadBanner(event){
+function showSettings(){
 
-let image = URL.createObjectURL(event.target.files[0]);
-
-document.getElementById("banner").style.backgroundImage =
-"url("+image+")";
-
-}
-
-
-
-function uploadProfile(event){
-
-let image = URL.createObjectURL(event.target.files[0]);
-
-document.getElementById("profilePic").src=image;
-
-}
-
-
-
-function saveProfile(){
-
-let name=document.getElementById("nameInput").value;
-
-
-if(name){
-
-document.getElementById("cornerName").innerHTML=name;
-
-}
-
-}
-
-
-
-function post(){
-
-let text=document.getElementById("postText").value;
-
-
-if(text){
-
-document.getElementById("posts").innerHTML +=
-
-`
-<div class="post">
-${text}
-</div>
-`;
-
-document.getElementById("postText").value="";
-
-}
+document.getElementById("settings").scrollIntoView();
 
 }
 
