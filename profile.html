@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profile - EveryCorner</title>
+
+<style>
+
+body {
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:white;
+    color:#222;
+}
+
+
+header {
+    background:#7b1e3a;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+
+header img {
+    width:120px;
+}
+
+
+.profile {
+
+    max-width:800px;
+    margin:40px auto;
+    padding:30px;
+
+}
+
+
+.card {
+
+    background:#fafafa;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+button {
+
+    background:#008c8c;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:25px;
+    cursor:pointer;
+
+}
+
+
+button:hover {
+
+    background:#7b1e3a;
+
+}
+
+
+input, textarea {
+
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+
+    border-radius:10px;
+    border:1px solid #ddd;
+
+}
+
+
+.post {
+
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-top:15px;
+    border-left:5px solid #008c8c;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<img src="everycorner.png">
+
+<h1>EveryCorner</h1>
+
+<p>Your Corner</p>
+
+</header>
+
+
+
+<div class="profile">
+
+
+<div class="card">
+
+<h2 id="username">
+Your Profile
+</h2>
+
+<p>
+Followers: 0
+</p>
+
+<button>
+Edit Profile
+</button>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>Add Friend</h2>
+
+
+<input placeholder="Search users">
+
+
+<button>
+Search
+</button>
+
+
+<h3>Friend Requests</h3>
+
+
+<div>
+
+<p>
+No requests yet
+</p>
+
+
+<button>
+Accept
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>Create Post</h2>
+
+
+<textarea placeholder="Share something..."></textarea>
+
+
+<button onclick="createPost()">
+Post
+</button>
+
+
+
+<div id="posts">
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<script>
+
+function createPost(){
+
+let text = document.querySelector("textarea").value;
+
+
+if(text){
+
+document.getElementById("posts").innerHTML +=
+
+`
+<div class="post">
+${text}
+</div>
+`;
+
+document.querySelector("textarea").value="";
+
+}
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
