@@ -1,5 +1,5 @@
 // EveryCorner App.js
-// LocalStorage Social Network Version
+// LocalStorage Social Network System
 
 
 // ==========================
@@ -9,9 +9,8 @@
 
 function createAccount(username, password){
 
-    let users = JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
+    let users =
+    JSON.parse(localStorage.getItem("users")) || {};
 
 
     if(users[username]){
@@ -26,6 +25,8 @@ function createAccount(username, password){
         password: password,
 
         followers: 0,
+
+        followersList: [],
 
         posts: [],
 
@@ -58,9 +59,10 @@ function createAccount(username, password){
 
 function login(username,password){
 
-    let users = JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || {};
+
 
 
     if(
@@ -116,11 +118,12 @@ function getLoggedInUser(){
 
 
 // ==========================
-// PROFILE LOADING
+// GET PROFILE USER
 // ==========================
 
 
 function getProfileUser(){
+
 
     let params =
     new URLSearchParams(
@@ -132,11 +135,13 @@ function getProfileUser(){
     params.get("user");
 
 
+
     if(username){
 
         return username;
 
     }
+
 
 
     return getLoggedInUser();
@@ -145,6 +150,11 @@ function getProfileUser(){
 
 
 
+
+
+// ==========================
+// LOAD PROFILE
+// ==========================
 
 
 function loadProfile(){
@@ -156,9 +166,7 @@ function loadProfile(){
 
 
     let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
+    JSON.parse(localStorage.getItem("users")) || {};
 
 
 
@@ -200,14 +208,14 @@ function loadProfile(){
 
 
 
-    let picture =
+    let pic =
     document.getElementById("profilePic");
 
 
 
-    if(picture){
+    if(pic){
 
-        picture.src =
+        pic.src =
         user.picture || "everycorner.png";
 
     }
@@ -232,10 +240,10 @@ function loadProfile(){
 
 
 
-
     showFollowers();
 
     loadPosts();
+
 
 }
 
@@ -244,7 +252,7 @@ function loadProfile(){
 
 
 // ==========================
-// IMAGE UPLOADS
+// PROFILE PICTURE
 // ==========================
 
 
@@ -255,8 +263,10 @@ function uploadProfile(event){
     getLoggedInUser();
 
 
+
     let file =
     event.target.files[0];
+
 
 
     if(!file){
@@ -281,14 +291,17 @@ function uploadProfile(event){
         );
 
 
+
         users[username].picture =
         e.target.result;
+
 
 
         localStorage.setItem(
             "users",
             JSON.stringify(users)
         );
+
 
 
         document.getElementById("profilePic")
@@ -300,10 +313,16 @@ function uploadProfile(event){
 
     reader.readAsDataURL(file);
 
+
 }
 
 
 
+
+
+// ==========================
+// BANNER
+// ==========================
 
 
 function uploadBanner(event){
@@ -313,8 +332,10 @@ function uploadBanner(event){
     getLoggedInUser();
 
 
+
     let file =
     event.target.files[0];
+
 
 
     if(!file){
@@ -339,14 +360,17 @@ function uploadBanner(event){
         );
 
 
+
         users[username].banner =
         e.target.result;
+
 
 
         localStorage.setItem(
             "users",
             JSON.stringify(users)
         );
+
 
 
         document.getElementById("banner")
@@ -359,6 +383,7 @@ function uploadBanner(event){
 
     reader.readAsDataURL(file);
 
+
 }
 
 
@@ -366,7 +391,7 @@ function uploadBanner(event){
 
 
 // ==========================
-// CHANGE USERNAME
+// CHANGE NAME
 // ==========================
 
 
@@ -375,6 +400,7 @@ function saveProfile(){
 
     let oldName =
     getLoggedInUser();
+
 
 
     let newName =
@@ -392,9 +418,7 @@ function saveProfile(){
 
 
     let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    );
+    JSON.parse(localStorage.getItem("users"));
 
 
 
@@ -437,6 +461,7 @@ function saveProfile(){
     window.location.href =
     "profile.html?user=" + newName;
 
+
 }
 
 
@@ -471,9 +496,7 @@ function createPost(){
 
 
     let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    );
+    JSON.parse(localStorage.getItem("users"));
 
 
 
@@ -492,7 +515,9 @@ function createPost(){
     .value="";
 
 
+
     loadPosts();
+
 
 }
 
@@ -507,10 +532,9 @@ function loadPosts(){
     getProfileUser();
 
 
+
     let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
+    JSON.parse(localStorage.getItem("users")) || {};
 
 
 
@@ -537,14 +561,12 @@ function loadPosts(){
     users[username].posts.forEach(function(post){
 
 
-        area.innerHTML += `
+        area.innerHTML +=
 
+        `
         <div class="post">
-
         ${post}
-
         </div>
-
         `;
 
 
@@ -565,19 +587,18 @@ function loadPosts(){
 function followUser(){
 
 
-    let username =
+    let target =
     getProfileUser();
 
 
-
-    let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    );
+    let follower =
+    getLoggedInUser();
 
 
 
-    if(!users[username]){
+    if(!follower){
+
+        alert("Sign in first");
 
         return;
 
@@ -585,7 +606,65 @@ function followUser(){
 
 
 
-    users[username].followers++;
+    if(target === follower){
+
+        alert("You cannot follow yourself");
+
+        return;
+
+    }
+
+
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || {};
+
+
+
+    if(!users[target]){
+
+        alert("User does not exist");
+
+        return;
+
+    }
+
+
+
+    if(
+        !users[target].followersList
+    ){
+
+        users[target].followersList=[];
+
+    }
+
+
+
+    if(
+        users[target]
+        .followersList
+        .includes(follower)
+    ){
+
+        alert("Already following");
+
+        return;
+
+    }
+
+
+
+    users[target]
+    .followersList
+    .push(follower);
+
+
+
+    users[target].followers =
+    users[target]
+    .followersList
+    .length;
 
 
 
@@ -597,6 +676,7 @@ function followUser(){
 
 
     showFollowers();
+
 
 }
 
@@ -613,9 +693,7 @@ function showFollowers(){
 
 
     let users =
-    JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
+    JSON.parse(localStorage.getItem("users")) || {};
 
 
 
@@ -627,11 +705,6 @@ function showFollowers(){
 
 
 
-    let count =
-    users[username].followers;
-
-
-
     let display =
     document.getElementById("followers");
 
@@ -639,13 +712,16 @@ function showFollowers(){
 
     if(display){
 
+        let count =
+        users[username].followers || 0;
+
+
 
         display.innerHTML =
         count +
         (count === 1 ?
         " Follower" :
         " Followers");
-
 
     }
 
@@ -656,7 +732,10 @@ function showFollowers(){
 
 
 
-// START PROFILE
+// ==========================
+// START
+// ==========================
+
 
 window.onload=function(){
 
