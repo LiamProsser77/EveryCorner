@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sign In - EveryCorner</title>
@@ -11,182 +12,94 @@
 
 <style>
 
-* {
-    box-sizing:border-box;
-}
-
-
 body {
 
-    margin:0;
-
-    font-family:Arial,sans-serif;
-
-    background:white;
-
-    color:#222;
+margin:0;
+font-family:Arial,sans-serif;
+background:white;
 
 }
 
 
 header {
 
-    text-align:center;
-
-    padding:40px 20px;
+text-align:center;
+padding:40px;
 
 }
 
 
 header img {
 
-    width:150px;
-
-    height:150px;
-
-    object-fit:contain;
-
-    border-radius:25px;
+width:150px;
 
 }
 
 
 h1 {
 
-    color:#7b1e3a;
-
-    font-size:42px;
+color:#7b1e3a;
 
 }
-
-
-.tagline {
-
-    color:#008c8c;
-
-    font-size:22px;
-
-}
-
 
 
 .box {
 
-    max-width:450px;
-
-    margin:30px auto;
-
-    background:#fafafa;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
-
-    border-top:7px solid #008c8c;
+max-width:400px;
+margin:auto;
+background:#fafafa;
+padding:35px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
 
 }
-
 
 
 h2 {
 
-    text-align:center;
-
-    color:#7b1e3a;
+color:#008c8c;
+text-align:center;
 
 }
-
 
 
 input {
 
-    width:100%;
-
-    padding:15px;
-
-    margin:10px 0;
-
-    border-radius:12px;
-
-    border:1px solid #ddd;
-
-    font-size:16px;
+width:100%;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
 
 }
 
 
-
 button {
 
-    width:100%;
-
-    padding:15px;
-
-    margin-top:15px;
-
-    background:#008c8c;
-
-    color:white;
-
-    border:none;
-
-    border-radius:30px;
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    cursor:pointer;
+width:100%;
+padding:15px;
+background:#008c8c;
+color:white;
+border:none;
+border-radius:30px;
+font-weight:bold;
+cursor:pointer;
 
 }
 
 
 button:hover {
 
-    background:#7b1e3a;
+background:#7b1e3a;
 
 }
-
-
-
-.links {
-
-    text-align:center;
-
-    margin-top:25px;
-
-}
-
 
 
 a {
 
-    color:#008c8c;
-
-    text-decoration:none;
-
-    font-weight:bold;
+color:#008c8c;
 
 }
-
-
-
-footer {
-
-    background:#7b1e3a;
-
-    color:white;
-
-    text-align:center;
-
-    padding:20px;
-
-    margin-top:60px;
-
-}
-
 
 </style>
 
@@ -203,11 +116,7 @@ footer {
 
 <h1>EveryCorner</h1>
 
-
-<p class="tagline">
-Welcome back to your Corner.
-</p>
-
+<p>Welcome back</p>
 
 </header>
 
@@ -221,43 +130,41 @@ Welcome back to your Corner.
 
 
 
-<form action="profile.html">
-
-
-<input type="email" placeholder="Email Address" required>
-
-
-<input type="password" placeholder="Password" required>
+<form onsubmit="signIn(event)">
 
 
 
-<button type="submit">
+<input
+id="username"
+type="text"
+placeholder="Username"
+required>
 
+
+
+<input
+type="password"
+placeholder="Password"
+required>
+
+
+
+<button>
 Sign In
-
 </button>
+
 
 
 </form>
 
 
 
-
-<div class="links">
-
-
 <p>
+Need an account?
 
-Don't have an account?
-
-<a href="signup.html">Create One</a>
-
-</p>
-
-
-<p>
-
-<a href="index.html">Back Home</a>
+<a href="signup.html">
+Sign Up
+</a>
 
 </p>
 
@@ -265,19 +172,8 @@ Don't have an account?
 </div>
 
 
-</div>
 
-
-
-
-<footer>
-
-<p>
-© 2026 EveryCorner. All rights reserved.
-</p>
-
-</footer>
-
+<script src="app.js"></script>
 
 
 </body>
