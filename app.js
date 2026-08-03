@@ -1,33 +1,19 @@
-// EveryCorner App System
-
-
 function createAccount(event) {
 
     event.preventDefault();
 
-
-    const username =
-    document.getElementById("username").value;
+    let username = document.getElementById("username").value.trim();
 
 
-    if(username.trim() !== "") {
+    if (username !== "") {
 
+        localStorage.setItem("everycorner_username", username);
 
-        localStorage.setItem(
-            "everycorner_user",
-            username
-        );
-
-
-        window.location.href =
-        "profile.html?user=" + username;
-
+        window.location.href = "profile.html?user=" + encodeURIComponent(username);
 
     }
 
 }
-
-
 
 
 
@@ -35,23 +21,14 @@ function signIn(event) {
 
     event.preventDefault();
 
-
-    const username =
-    document.getElementById("username").value;
+    let username = document.getElementById("username").value.trim();
 
 
-    if(username.trim() !== "") {
+    if (username !== "") {
 
+        localStorage.setItem("everycorner_username", username);
 
-        localStorage.setItem(
-            "everycorner_user",
-            username
-        );
-
-
-        window.location.href =
-        "profile.html?user=" + username;
-
+        window.location.href = "profile.html?user=" + encodeURIComponent(username);
 
     }
 
@@ -59,44 +36,35 @@ function signIn(event) {
 
 
 
-
-
-// Load profile username
+// PROFILE PAGE
 
 function loadProfile() {
 
 
-    const params =
-    new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
 
 
-    let username =
-    params.get("user");
+    let username = params.get("user");
 
 
 
-    if(!username) {
+    if (!username) {
 
-
-        username =
-        localStorage.getItem("everycorner_user");
-
+        username = localStorage.getItem("everycorner_username");
 
     }
 
 
 
-    if(username) {
+    if (username) {
 
 
-        const name =
-        document.getElementById("cornerName");
+        let name = document.getElementById("cornerName");
 
 
-        if(name) {
+        if (name) {
 
-            name.innerHTML =
-            username + "'s Corner";
+            name.innerHTML = username + "'s Corner";
 
         }
 
@@ -106,4 +74,4 @@ function loadProfile() {
 }
 
 
-window.onload = loadProfile;
+document.addEventListener("DOMContentLoaded", loadProfile);
