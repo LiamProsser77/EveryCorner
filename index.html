@@ -6,6 +6,10 @@
     <title>EveryCorner - Your Community, Your Corner</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -14,74 +18,106 @@
         }
 
         header {
-            background: #4b6cff;
+            background: linear-gradient(135deg, #4b6cff, #6c4bff);
             color: white;
-            padding: 25px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         header img {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            border-radius: 25px;
+            margin-bottom: 15px;
         }
 
         h1 {
-            font-size: 42px;
+            font-size: 48px;
             margin: 10px 0;
         }
 
         .tagline {
-            font-size: 20px;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            max-width: 650px;
+            margin: 15px auto;
+            font-size: 18px;
         }
 
         .buttons a {
             display: inline-block;
-            margin: 15px;
-            padding: 12px 25px;
+            margin: 15px 8px;
+            padding: 14px 30px;
             background: white;
             color: #4b6cff;
             text-decoration: none;
             border-radius: 30px;
             font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .buttons a:hover {
+            transform: scale(1.05);
         }
 
         section {
-            max-width: 900px;
+            max-width: 1000px;
             margin: auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
         }
 
         .cards {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .card {
             background: white;
-            width: 250px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 280px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #4b6cff;
+        }
+
+        .feature {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         footer {
             background: #222;
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 25px;
         }
+
     </style>
 </head>
 
 <body>
 
 <header>
-    <!-- Replace logo.png with your logo file -->
-    <img src="logo.png" alt="EveryCorner Logo">
+
+    <img src="everycorner.png" alt="EveryCorner Logo">
 
     <h1>EveryCorner</h1>
 
@@ -91,51 +127,56 @@
 
     <p>
         A social network where groups become the profile.
-        Build your Corner, invite your people, and grow together.
+        Create your Corner, invite your people, and grow together.
     </p>
 
     <div class="buttons">
-        <a href="#">Sign Up</a>
-        <a href="#">Log In</a>
+        <a href="#">Create Your Corner</a>
+        <a href="#">Sign In</a>
     </div>
+
 </header>
 
 
 <section>
+
     <h2>What is EveryCorner?</h2>
 
     <p>
-        Unlike traditional social media, EveryCorner is not about individual profiles.
-        Your group is your identity. Friends, teams, communities, and organizations
-        can create a Corner that everyone follows together.
+        EveryCorner changes social media by focusing on communities instead
+        of individual profiles. Your group is your identity. Friends, teams,
+        clubs, and communities can build a Corner that everyone follows together.
     </p>
+
 </section>
 
 
 <section>
 
-<h2>How It Works</h2>
+<h2>How EveryCorner Works</h2>
 
 <div class="cards">
 
     <div class="card">
-        <h3>1. Create a Corner</h3>
+        <h3>Create a Corner</h3>
         <p>
-            Make a shared space for your friends, community, or team.
+            Make a shared space for your friends, community, team, or organization.
         </p>
     </div>
 
+
     <div class="card">
-        <h3>2. Invite People</h3>
+        <h3>Invite Members</h3>
         <p>
-            Add members who help build your Corner.
+            Bring people together and let everyone help build the Corner.
         </p>
     </div>
 
+
     <div class="card">
-        <h3>3. Grow Together</h3>
+        <h3>Grow Together</h3>
         <p>
-            Your Corner gets followers, not individual popularity.
+            Your Corner gets followers as a group instead of individuals competing.
         </p>
     </div>
 
@@ -144,8 +185,28 @@
 </section>
 
 
+<section>
+
+<div class="feature">
+
+<h2>A New Way To Connect</h2>
+
+<p>
+    No popularity contests. No single person being the whole identity.
+    EveryCorner is about communities, friendships, and shared experiences.
+</p>
+
+</div>
+
+</section>
+
+
 <footer>
-    <p>© 2026 EveryCorner. All rights reserved.</p>
+
+<p>
+© 2026 EveryCorner. All rights reserved.
+</p>
+
 </footer>
 
 
