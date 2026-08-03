@@ -21,7 +21,6 @@ background:white;
 }
 
 
-
 header{
 
 text-align:center;
@@ -37,13 +36,11 @@ width:100px;
 }
 
 
-
 h1,h2{
 
 color:#7b1e3a;
 
 }
-
 
 
 
@@ -55,7 +52,6 @@ background-size:cover;
 background-position:center;
 
 }
-
 
 
 
@@ -101,7 +97,6 @@ margin:5px;
 }
 
 
-
 button:hover{
 
 background:#7b1e3a;
@@ -125,6 +120,7 @@ border-radius:20px;
 
 
 
+
 input,textarea{
 
 width:100%;
@@ -132,6 +128,7 @@ padding:12px;
 margin:10px 0;
 
 }
+
 
 
 
@@ -159,12 +156,16 @@ padding:20px;
 }
 
 
+
 </style>
+
 
 </head>
 
 
+
 <body>
+
 
 
 <header>
@@ -177,14 +178,18 @@ padding:20px;
 
 
 
+
 <div id="banner" class="banner"></div>
+
+
 
 
 
 <div class="profile">
 
 
-<img id="profilePic"
+<img 
+id="profilePic"
 class="profile-picture"
 src="everycorner.png">
 
@@ -202,11 +207,17 @@ Loading...
 
 
 
+
 <button onclick="followUser()">
 Follow
 </button>
 
 
+<button onclick="logout()">
+Logout
+</button>
+
+
 
 </div>
 
@@ -214,31 +225,49 @@ Follow
 
 
 
-<div class="box">
+
+
+<div class="box" id="settings">
 
 
 <h2>Settings</h2>
 
 
+
 <p>Upload Profile Picture</p>
 
-<input type="file" onchange="uploadProfile(event)">
+
+<input 
+type="file"
+onchange="uploadProfile(event)">
+
+
 
 
 
 <p>Upload Banner</p>
 
-<input type="file" onchange="uploadBanner(event)">
+
+<input 
+type="file"
+onchange="uploadBanner(event)">
 
 
 
-<input id="nameInput"
+
+
+<input 
+id="nameInput"
 placeholder="Change Corner Name">
 
 
+
 <button onclick="saveProfile()">
+
 Save Name
+
 </button>
+
 
 
 </div>
@@ -247,27 +276,38 @@ Save Name
 
 
 
-<div class="box">
+
+
+<div class="box" id="postBox">
 
 
 <h2>Create Post</h2>
 
 
-<textarea id="postText"
-placeholder="Write a post..."></textarea>
+
+<textarea 
+id="postText"
+placeholder="Write a post...">
+</textarea>
 
 
 
 <button onclick="createPost()">
+
 Post
+
 </button>
+
 
 
 
 <div id="posts"></div>
 
 
+
 </div>
+
+
 
 
 
@@ -281,7 +321,54 @@ Post
 
 
 
+
+
 <script src="app.js"></script>
+
+
+
+<script>
+
+
+// Hide settings when viewing another person
+
+let params =
+new URLSearchParams(
+window.location.search
+);
+
+
+let profileUser =
+params.get("user");
+
+
+let loggedUser =
+localStorage.getItem(
+"loggedInUser"
+);
+
+
+
+if(
+profileUser &&
+profileUser !== loggedUser
+){
+
+document.getElementById("settings")
+.style.display="none";
+
+
+document.getElementById("postBox")
+.style.display="none";
+
+
+}
+
+
+
+
+</script>
+
 
 
 </body>
