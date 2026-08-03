@@ -101,7 +101,6 @@ color:#008c8c;
 
 }
 
-
 </style>
 
 
@@ -123,13 +122,16 @@ color:#008c8c;
 
 
 
+
 <div class="box">
 
 
 <h2>Sign Up</h2>
 
 
-<form onsubmit="createAccount(event)">
+
+<form onsubmit="signup(event)">
+
 
 
 <input 
@@ -139,32 +141,39 @@ placeholder="Choose Username"
 required>
 
 
-<input
-type="email"
-placeholder="Email"
-required>
 
 
 <input
+id="password"
 type="password"
-placeholder="Password"
+placeholder="Create Password"
 required>
 
 
 
-<button>
+
+<button type="submit">
 Create Account
 </button>
+
 
 
 </form>
 
 
+
+<p id="message"></p>
+
+
+
 <p>
+
 Already have an account?
+
 <a href="signin.html">
 Sign In
 </a>
+
 </p>
 
 
@@ -172,7 +181,82 @@ Sign In
 
 
 
+
+
 <script src="app.js"></script>
+
+
+
+<script>
+
+
+function signup(event){
+
+
+event.preventDefault();
+
+
+
+let username =
+document.getElementById("username").value.trim();
+
+
+
+let password =
+document.getElementById("password").value;
+
+
+
+let result =
+createAccount(
+username,
+password
+);
+
+
+
+let message =
+document.getElementById("message");
+
+
+
+if(result){
+
+
+message.innerHTML =
+"Account created! Redirecting...";
+
+
+
+setTimeout(function(){
+
+
+window.location.href =
+"profile.html?user=" + username;
+
+
+
+},1000);
+
+
+
+}
+
+else{
+
+
+message.innerHTML =
+"Username already exists";
+
+
+}
+
+
+}
+
+
+</script>
+
 
 
 </body>
