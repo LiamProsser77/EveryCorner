@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,12 +17,9 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #ffffff;
+    background: white;
     color: #222;
 }
-
-
-/* HEADER */
 
 header {
     text-align: center;
@@ -38,7 +36,6 @@ header img {
 h1 {
     color: #7b1e3a;
     font-size: 42px;
-    margin: 15px 0;
 }
 
 .tagline {
@@ -47,126 +44,115 @@ h1 {
 }
 
 
-/* FORM */
+.box {
 
-.signup-box {
+    max-width:450px;
+    margin:30px auto;
 
-    max-width: 450px;
+    background:#fafafa;
 
-    margin: 30px auto;
+    padding:40px;
 
-    background: #fafafa;
+    border-radius:25px;
 
-    padding: 40px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
 
-    border-radius: 25px;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-
-    border-top: 7px solid #008c8c;
+    border-top:7px solid #008c8c;
 
 }
 
 
-.signup-box h2 {
+h2 {
 
-    color: #7b1e3a;
+    text-align:center;
 
-    text-align: center;
+    color:#7b1e3a;
 
 }
-
 
 
 input {
 
-    width: 100%;
+    width:100%;
 
-    padding: 15px;
+    padding:15px;
 
-    margin: 10px 0;
+    margin:10px 0;
 
-    border: 1px solid #ddd;
+    border-radius:12px;
 
-    border-radius: 12px;
+    border:1px solid #ddd;
 
-    font-size: 16px;
+    font-size:16px;
 
 }
-
 
 
 button {
 
-    width: 100%;
+    width:100%;
 
-    padding: 15px;
+    padding:15px;
 
-    margin-top: 15px;
+    margin-top:15px;
 
-    background: #008c8c;
+    background:#008c8c;
 
-    color: white;
+    color:white;
 
-    border: none;
+    border:none;
 
-    border-radius: 30px;
+    border-radius:30px;
 
-    font-size: 17px;
+    font-size:17px;
 
-    font-weight: bold;
+    font-weight:bold;
 
-    cursor: pointer;
+    cursor:pointer;
 
 }
-
 
 
 button:hover {
 
-    background: #7b1e3a;
+    background:#7b1e3a;
 
 }
 
-
-/* LINKS */
 
 .links {
 
-    text-align: center;
+    text-align:center;
 
-    margin-top: 25px;
-
-}
-
-
-.links a {
-
-    color: #008c8c;
-
-    text-decoration: none;
-
-    font-weight: bold;
+    margin-top:25px;
 
 }
 
 
-/* FOOTER */
+a {
+
+    color:#008c8c;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
 
 footer {
 
-    background: #7b1e3a;
+    background:#7b1e3a;
 
-    color: white;
+    color:white;
 
-    text-align: center;
+    text-align:center;
 
-    padding: 20px;
+    padding:20px;
 
-    margin-top: 60px;
+    margin-top:60px;
 
 }
-
 
 </style>
 
@@ -178,25 +164,25 @@ footer {
 
 <header>
 
-<img src="everycorner.png" alt="EveryCorner Logo">
+<img src="everycorner.png">
 
 <h1>EveryCorner</h1>
 
 <p class="tagline">
-Create your Corner today.
+Create your Corner.
 </p>
 
 </header>
 
 
 
-<div class="signup-box">
+<div class="box">
 
 
-<h2>Create Your Account</h2>
+<h2>Create Account</h2>
 
 
-<form>
+<form action="profile.html">
 
 
 <input type="text" placeholder="Your Name" required>
@@ -208,16 +194,13 @@ Create your Corner today.
 <input type="password" placeholder="Password" required>
 
 
-<input type="text" placeholder="Create Your Corner Name" required>
-
-
 
 <button type="submit">
 Create Account
 </button>
 
 
-<form action="profile.html">
+</form>
 
 
 
@@ -230,11 +213,8 @@ Already have an account?
 
 
 <p>
-
-<a href="index.html">Back to EveryCorner</a>
-
+<a href="index.html">Back Home</a>
 </p>
-
 
 </div>
 
