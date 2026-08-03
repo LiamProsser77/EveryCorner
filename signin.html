@@ -12,96 +12,89 @@
 <style>
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 
 body {
 
-    margin: 0;
+    margin:0;
 
-    font-family: Arial, sans-serif;
+    font-family:Arial,sans-serif;
 
-    background: #ffffff;
+    background:white;
 
-    color: #222;
+    color:#222;
 
 }
 
 
-/* HEADER */
-
 header {
 
-    text-align: center;
+    text-align:center;
 
-    padding: 40px 20px;
+    padding:40px 20px;
 
 }
 
 
 header img {
 
-    width: 150px;
+    width:150px;
 
-    height: 150px;
+    height:150px;
 
-    object-fit: contain;
+    object-fit:contain;
 
-    border-radius: 25px;
+    border-radius:25px;
 
 }
 
 
 h1 {
 
-    color: #7b1e3a;
+    color:#7b1e3a;
 
-    font-size: 42px;
-
-    margin: 15px 0;
+    font-size:42px;
 
 }
 
 
 .tagline {
 
-    color: #008c8c;
+    color:#008c8c;
 
-    font-size: 22px;
-
-}
-
-
-
-/* SIGN IN BOX */
-
-
-.signin-box {
-
-    max-width: 450px;
-
-    margin: 30px auto;
-
-    background: #fafafa;
-
-    padding: 40px;
-
-    border-radius: 25px;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-
-    border-top: 7px solid #008c8c;
+    font-size:22px;
 
 }
 
 
 
-.signin-box h2 {
+.box {
 
-    text-align: center;
+    max-width:450px;
 
-    color: #7b1e3a;
+    margin:30px auto;
+
+    background:#fafafa;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+
+    border-top:7px solid #008c8c;
+
+}
+
+
+
+h2 {
+
+    text-align:center;
+
+    color:#7b1e3a;
 
 }
 
@@ -109,17 +102,17 @@ h1 {
 
 input {
 
-    width: 100%;
+    width:100%;
 
-    padding: 15px;
+    padding:15px;
 
-    margin: 10px 0;
+    margin:10px 0;
 
-    border: 1px solid #ddd;
+    border-radius:12px;
 
-    border-radius: 12px;
+    border:1px solid #ddd;
 
-    font-size: 16px;
+    font-size:16px;
 
 }
 
@@ -127,77 +120,70 @@ input {
 
 button {
 
-    width: 100%;
+    width:100%;
 
-    padding: 15px;
+    padding:15px;
 
-    margin-top: 15px;
+    margin-top:15px;
 
-    background: #008c8c;
+    background:#008c8c;
 
-    color: white;
+    color:white;
 
-    border: none;
+    border:none;
 
-    border-radius: 30px;
+    border-radius:30px;
 
-    font-size: 17px;
+    font-size:17px;
 
-    font-weight: bold;
+    font-weight:bold;
 
-    cursor: pointer;
+    cursor:pointer;
 
 }
-
 
 
 button:hover {
 
-    background: #7b1e3a;
+    background:#7b1e3a;
 
 }
 
-
-
-/* LINKS */
 
 
 .links {
 
-    text-align: center;
+    text-align:center;
 
-    margin-top: 25px;
-
-}
-
-
-
-.links a {
-
-    color: #008c8c;
-
-    text-decoration: none;
-
-    font-weight: bold;
+    margin-top:25px;
 
 }
 
 
 
-/* FOOTER */
+a {
+
+    color:#008c8c;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
 
 
 footer {
 
-    background: #7b1e3a;
+    background:#7b1e3a;
 
-    color: white;
+    color:white;
 
-    text-align: center;
+    text-align:center;
 
-    padding: 20px;
+    padding:20px;
 
-    margin-top: 60px;
+    margin-top:60px;
 
 }
 
@@ -211,20 +197,15 @@ footer {
 <body>
 
 
-
 <header>
 
-
-<img src="everycorner.png" alt="EveryCorner Logo">
-
+<img src="everycorner.png">
 
 <h1>EveryCorner</h1>
 
 
 <p class="tagline">
-
 Welcome back to your Corner.
-
 </p>
 
 
@@ -233,14 +214,14 @@ Welcome back to your Corner.
 
 
 
-<div class="signin-box">
+<div class="box">
 
 
 <h2>Sign In</h2>
 
 
 
-<form>
+<form action="profile.html">
 
 
 <input type="email" placeholder="Email Address" required>
@@ -257,7 +238,7 @@ Sign In
 </button>
 
 
-<form action="profile.html">
+</form>
 
 
 
@@ -274,16 +255,14 @@ Don't have an account?
 </p>
 
 
-
 <p>
 
-<a href="index.html">Back to EveryCorner</a>
+<a href="index.html">Back Home</a>
 
 </p>
 
 
 </div>
-
 
 
 </div>
@@ -293,13 +272,9 @@ Don't have an account?
 
 <footer>
 
-
 <p>
-
 © 2026 EveryCorner. All rights reserved.
-
 </p>
-
 
 </footer>
 
