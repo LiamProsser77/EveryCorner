@@ -1,5 +1,5 @@
 // EveryCorner App.js
-// LocalStorage Account Version
+// LocalStorage Social Network Version
 
 
 // ==========================
@@ -9,8 +9,9 @@
 
 function createAccount(username, password){
 
-    let users =
-    JSON.parse(localStorage.getItem("users")) || {};
+    let users = JSON.parse(
+        localStorage.getItem("users")
+    ) || {};
 
 
     if(users[username]){
@@ -57,10 +58,9 @@ function createAccount(username, password){
 
 function login(username,password){
 
-
-    let users =
-    JSON.parse(localStorage.getItem("users")) || {};
-
+    let users = JSON.parse(
+        localStorage.getItem("users")
+    ) || {};
 
 
     if(
@@ -94,9 +94,11 @@ function logout(){
     );
 
 
-    window.location.href="signin.html";
+    window.location.href =
+    "signin.html";
 
 }
+
 
 
 
@@ -114,12 +116,11 @@ function getLoggedInUser(){
 
 
 // ==========================
-// PROFILE
+// PROFILE LOADING
 // ==========================
 
 
 function getProfileUser(){
-
 
     let params =
     new URLSearchParams(
@@ -127,17 +128,15 @@ function getProfileUser(){
     );
 
 
-    let user =
+    let username =
     params.get("user");
 
 
+    if(username){
 
-    if(user){
-
-        return user;
+        return username;
 
     }
-
 
 
     return getLoggedInUser();
@@ -168,16 +167,26 @@ function loadProfile(){
 
 
 
+    let title =
+    document.getElementById("cornerName");
+
+
+
     if(!user){
+
+
+        if(title){
+
+            title.innerHTML =
+            "User Not Found";
+
+        }
+
 
         return;
 
     }
 
-
-
-    let title =
-    document.getElementById("cornerName");
 
 
 
@@ -190,6 +199,7 @@ function loadProfile(){
 
 
 
+
     let picture =
     document.getElementById("profilePic");
 
@@ -198,26 +208,34 @@ function loadProfile(){
     if(picture){
 
         picture.src =
-        user.picture;
+        user.picture || "everycorner.png";
 
     }
 
 
 
-    if(user.banner){
 
-        document.getElementById("banner")
-        .style.backgroundImage =
+    let banner =
+    document.getElementById("banner");
+
+
+
+    if(
+        banner &&
+        user.banner
+    ){
+
+        banner.style.backgroundImage =
         "url('" + user.banner + "')";
 
     }
 
 
 
+
     showFollowers();
 
     loadPosts();
-
 
 }
 
@@ -226,7 +244,7 @@ function loadProfile(){
 
 
 // ==========================
-// UPLOAD PROFILE PICTURE
+// IMAGE UPLOADS
 // ==========================
 
 
@@ -237,64 +255,55 @@ function uploadProfile(event){
     getLoggedInUser();
 
 
-
     let file =
     event.target.files[0];
 
 
+    if(!file){
 
-    if(file){
-
-
-        let reader =
-        new FileReader();
-
-
-
-        reader.onload=function(e){
-
-
-            let users =
-            JSON.parse(
-                localStorage.getItem("users")
-            );
-
-
-
-            users[username].picture =
-            e.target.result;
-
-
-
-            localStorage.setItem(
-                "users",
-                JSON.stringify(users)
-            );
-
-
-
-            document.getElementById("profilePic")
-            .src=e.target.result;
-
-
-        };
-
-
-        reader.readAsDataURL(file);
-
+        return;
 
     }
 
+
+
+    let reader =
+    new FileReader();
+
+
+
+    reader.onload=function(e){
+
+
+        let users =
+        JSON.parse(
+            localStorage.getItem("users")
+        );
+
+
+        users[username].picture =
+        e.target.result;
+
+
+        localStorage.setItem(
+            "users",
+            JSON.stringify(users)
+        );
+
+
+        document.getElementById("profilePic")
+        .src=e.target.result;
+
+
+    };
+
+
+    reader.readAsDataURL(file);
 
 }
 
 
 
-
-
-// ==========================
-// UPLOAD BANNER
-// ==========================
 
 
 function uploadBanner(event){
@@ -304,54 +313,51 @@ function uploadBanner(event){
     getLoggedInUser();
 
 
-
     let file =
     event.target.files[0];
 
 
+    if(!file){
 
-    if(file){
-
-
-        let reader =
-        new FileReader();
-
-
-
-        reader.onload=function(e){
-
-
-            let users =
-            JSON.parse(
-                localStorage.getItem("users")
-            );
-
-
-
-            users[username].banner =
-            e.target.result;
-
-
-
-            localStorage.setItem(
-                "users",
-                JSON.stringify(users)
-            );
-
-
-
-            document.getElementById("banner")
-            .style.backgroundImage =
-            "url('" + e.target.result + "')";
-
-
-        };
-
-
-        reader.readAsDataURL(file);
-
+        return;
 
     }
+
+
+
+    let reader =
+    new FileReader();
+
+
+
+    reader.onload=function(e){
+
+
+        let users =
+        JSON.parse(
+            localStorage.getItem("users")
+        );
+
+
+        users[username].banner =
+        e.target.result;
+
+
+        localStorage.setItem(
+            "users",
+            JSON.stringify(users)
+        );
+
+
+        document.getElementById("banner")
+        .style.backgroundImage =
+        "url('" + e.target.result + "')";
+
+
+    };
+
+
+    reader.readAsDataURL(file);
 
 }
 
@@ -367,18 +373,17 @@ function uploadBanner(event){
 function saveProfile(){
 
 
-    let oldUsername =
+    let oldName =
     getLoggedInUser();
 
 
-
-    let newUsername =
+    let newName =
     document.getElementById("nameInput")
     .value.trim();
 
 
 
-    if(!newUsername){
+    if(!newName){
 
         return;
 
@@ -393,7 +398,10 @@ function saveProfile(){
 
 
 
-    if(users[newUsername]){
+    if(
+        users[newName] &&
+        newName !== oldName
+    ){
 
         alert("Username already exists");
 
@@ -403,12 +411,12 @@ function saveProfile(){
 
 
 
-    users[newUsername] =
-    users[oldUsername];
+    users[newName] =
+    users[oldName];
 
 
 
-    delete users[oldUsername];
+    delete users[oldName];
 
 
 
@@ -421,14 +429,13 @@ function saveProfile(){
 
     localStorage.setItem(
         "loggedInUser",
-        newUsername
+        newName
     );
 
 
 
     window.location.href =
-    "profile.html?user=" + newUsername;
-
+    "profile.html?user=" + newName;
 
 }
 
@@ -487,7 +494,6 @@ function createPost(){
 
     loadPosts();
 
-
 }
 
 
@@ -501,11 +507,10 @@ function loadPosts(){
     getProfileUser();
 
 
-
     let users =
     JSON.parse(
         localStorage.getItem("users")
-    );
+    ) || {};
 
 
 
@@ -514,7 +519,10 @@ function loadPosts(){
 
 
 
-    if(!area || !users[username]){
+    if(
+        !area ||
+        !users[username]
+    ){
 
         return;
 
@@ -529,12 +537,14 @@ function loadPosts(){
     users[username].posts.forEach(function(post){
 
 
-        area.innerHTML +=
+        area.innerHTML += `
 
-        `
         <div class="post">
+
         ${post}
+
         </div>
+
         `;
 
 
@@ -567,6 +577,14 @@ function followUser(){
 
 
 
+    if(!users[username]){
+
+        return;
+
+    }
+
+
+
     users[username].followers++;
 
 
@@ -579,7 +597,6 @@ function followUser(){
 
 
     showFollowers();
-
 
 }
 
@@ -598,7 +615,7 @@ function showFollowers(){
     let users =
     JSON.parse(
         localStorage.getItem("users")
-    );
+    ) || {};
 
 
 
@@ -623,19 +640,11 @@ function showFollowers(){
     if(display){
 
 
-        if(count === 1){
-
-            display.innerHTML =
-            "1 Follower";
-
-        }
-
-        else{
-
-            display.innerHTML =
-            count + " Followers";
-
-        }
+        display.innerHTML =
+        count +
+        (count === 1 ?
+        " Follower" :
+        " Followers");
 
 
     }
@@ -647,12 +656,18 @@ function showFollowers(){
 
 
 
+// START PROFILE
+
 window.onload=function(){
 
-    if(document.getElementById("cornerName")){
+
+    if(
+        document.getElementById("cornerName")
+    ){
 
         loadProfile();
 
     }
+
 
 };
