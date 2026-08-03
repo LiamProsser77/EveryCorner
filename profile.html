@@ -4,242 +4,188 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EveryCorner - Your Corner</title>
+
+<title>EveryCorner Profile</title>
+
 
 <style>
 
-* {
-    box-sizing:border-box;
-}
+body{
 
-
-body {
-
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:white;
-    color:#222;
+margin:0;
+font-family:Arial;
+background:white;
+color:#222;
 
 }
 
 
-/* TOP */
+header{
 
-header {
-
-    background:white;
-    text-align:center;
-    padding:30px;
+text-align:center;
+padding:30px;
 
 }
 
 
-header img {
+header img{
 
-    width:100px;
+width:100px;
+
 }
 
 
-header h1 {
+h1,h2{
 
-    color:#7b1e3a;
+color:#7b1e3a;
 
 }
 
 
 
-/* PROFILE AREA */
+.banner{
 
+height:260px;
 
-.container {
+background:#008c8c;
 
-    max-width:900px;
-    margin:auto;
+background-size:cover;
 
-}
-
-
-
-.banner {
-
-    height:260px;
-
-    background:#008c8c;
-
-    border-radius:0 0 25px 25px;
-
-    background-size:cover;
-
-    background-position:center;
+background-position:center;
 
 }
 
 
 
+.profile{
 
-.profile {
+max-width:800px;
 
-    background:white;
+margin:-70px auto 20px;
 
-    margin:-70px 20px 0;
+background:white;
 
-    position:relative;
+padding:30px;
 
-    padding:30px;
+border-radius:25px;
 
-    border-radius:25px;
+text-align:center;
 
-    text-align:center;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
-
-}
-
-
-
-
-.profile-picture {
-
-    width:150px;
-
-    height:150px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:6px solid white;
+box-shadow:0 8px 20px #ccc;
 
 }
 
 
 
-h2 {
+.profile-picture{
 
-    color:#7b1e3a;
+width:150px;
 
-}
+height:150px;
 
+border-radius:50%;
 
-.teal {
+object-fit:cover;
 
-    color:#008c8c;
-
-}
-
-
-
-
-button {
-
-    background:#008c8c;
-
-    color:white;
-
-    border:none;
-
-    padding:13px 25px;
-
-    border-radius:30px;
-
-    cursor:pointer;
-
-    margin:5px;
-
-    font-weight:bold;
-
-}
-
-
-button:hover {
-
-    background:#7b1e3a;
+border:5px solid white;
 
 }
 
 
 
+button{
+
+background:#008c8c;
+
+color:white;
+
+border:none;
+
+padding:12px 25px;
+
+border-radius:30px;
+
+cursor:pointer;
+
+margin:5px;
+
+}
 
 
-.box {
+button:hover{
 
-    background:#fafafa;
-
-    margin:30px 20px;
-
-    padding:30px;
-
-    border-radius:25px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+background:#7b1e3a;
 
 }
 
 
 
-input, textarea {
+.box{
 
+max-width:800px;
 
-    width:100%;
+margin:30px auto;
 
-    padding:12px;
+background:#fafafa;
 
-    margin:10px 0;
+padding:25px;
 
-    border-radius:10px;
-
-    border:1px solid #ddd;
-
-}
-
-
-
-
-.post {
-
-
-    background:white;
-
-    padding:20px;
-
-    margin-top:15px;
-
-    border-radius:15px;
-
-    border-left:5px solid #008c8c;
-
+border-radius:20px;
 
 }
 
 
 
-footer {
+input,textarea{
+
+width:100%;
+
+padding:12px;
+
+margin:10px 0;
+
+}
 
 
-    background:#7b1e3a;
 
-    color:white;
+.post{
 
-    text-align:center;
+background:white;
 
-    padding:25px;
+padding:15px;
 
-    margin-top:50px;
+margin:10px;
 
+border-left:5px solid #008c8c;
+
+border-radius:10px;
+
+}
+
+
+
+footer{
+
+background:#7b1e3a;
+
+color:white;
+
+text-align:center;
+
+padding:20px;
 
 }
 
 
 </style>
 
-
 </head>
 
 
 <body>
-
 
 
 <header>
@@ -248,56 +194,32 @@ footer {
 
 <h1>EveryCorner</h1>
 
-<p class="teal">
-Your community. Your Corner.
-</p>
-
-
 </header>
 
 
 
-
-<div class="container">
-
-
-
-<div id="banner" class="banner">
-
-</div>
-
+<div id="banner" class="banner"></div>
 
 
 
 <div class="profile">
 
 
-<img 
-id="profilePic"
+<img id="profilePic"
 class="profile-picture"
 src="everycorner.png">
 
 
-
 <h2 id="cornerName">
-Loading Corner...
+Loading...
 </h2>
 
 
-<p>
-Followers: 0
-</p>
 
-
-
-<button>
+<button onclick="addFriend()">
 Add Friend
 </button>
 
-
-<button onclick="showSettings()">
-Settings
-</button>
 
 
 </div>
@@ -306,43 +228,28 @@ Settings
 
 
 
-<div class="box" id="settings">
+<div class="box">
 
 
-<h2>Corner Settings</h2>
+<h2>Settings</h2>
 
 
+<p>Upload Banner</p>
 
-<label>
-Upload Banner
-</label>
-
-<input 
-type="file"
+<input type="file"
 onchange="uploadBanner(event)">
 
 
 
-<label>
-Upload Profile Picture
-</label>
+<p>Upload Profile Picture</p>
 
-
-<input
-type="file"
+<input type="file"
 onchange="uploadProfile(event)">
 
 
 
-<label>
-Change Corner Name
-</label>
-
-
-<input
-id="nameInput"
-placeholder="New Corner Name">
-
+<input id="nameInput"
+placeholder="Change Corner Name">
 
 
 <button onclick="saveProfile()">
@@ -355,18 +262,15 @@ Save
 
 
 
-
 <div class="box">
 
 
 <h2>Create Post</h2>
 
 
-<textarea 
-id="postText"
-placeholder="Share something with your Corner...">
+<textarea id="postText"
+placeholder="Write something...">
 </textarea>
-
 
 
 <button onclick="createPost()">
@@ -374,29 +278,17 @@ Post
 </button>
 
 
-
-<div id="posts">
-
-</div>
+<div id="posts"></div>
 
 
 </div>
-
-
-
-
-
-</div>
-
 
 
 
 
 <footer>
 
-<p>
-© 2026 EveryCorner. All rights reserved.
-</p>
+© 2026 EveryCorner
 
 </footer>
 
@@ -404,20 +296,6 @@ Post
 
 
 <script src="app.js"></script>
-
-
-<script>
-
-
-function showSettings(){
-
-document.getElementById("settings").scrollIntoView();
-
-}
-
-
-</script>
-
 
 
 </body>
