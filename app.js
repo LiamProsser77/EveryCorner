@@ -1,29 +1,26 @@
 // EveryCorner App.js
 
 
-// GET USER FROM URL
-
 function getUsername() {
 
-    const params =
-    new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
 
-    let user = params.get("user");
+    let username = params.get("user");
 
 
-    if(user){
+    if(username){
 
         localStorage.setItem(
             "everycorner_username",
-            user
+            username
         );
 
     }
 
 
-    if(!user){
+    if(!username){
 
-        user =
+        username =
         localStorage.getItem(
             "everycorner_username"
         );
@@ -31,14 +28,13 @@ function getUsername() {
     }
 
 
-    return user || "New User";
+    return username || "New User";
 
 }
 
 
 
 
-// LOAD PROFILE
 
 function loadProfile(){
 
@@ -46,45 +42,44 @@ function loadProfile(){
     let username = getUsername();
 
 
-
-    let name =
+    let title =
     document.getElementById("cornerName");
 
 
-    if(name){
+    if(title){
 
-        name.innerHTML =
+        title.innerHTML =
         username + "'s Corner";
 
     }
 
 
 
-    let savedPicture =
+    let picture =
     localStorage.getItem(
         username + "_picture"
     );
 
 
-    if(savedPicture){
+    if(picture){
 
         document.getElementById("profilePic").src =
-        savedPicture;
+        picture;
 
     }
 
 
 
-    let savedBanner =
+    let banner =
     localStorage.getItem(
         username + "_banner"
     );
 
 
-    if(savedBanner){
+    if(banner){
 
         document.getElementById("banner").style.backgroundImage =
-        "url('" + savedBanner + "')";
+        "url('" + banner + "')";
 
     }
 
@@ -92,19 +87,21 @@ function loadProfile(){
 
     loadPosts();
 
+    showFollowers();
+
 
 }
 
 
 
 
-// PROFILE PICTURE
+
+// PROFILE IMAGE
 
 function uploadProfile(event){
 
 
     let username = getUsername();
-
 
     let file =
     event.target.files[0];
@@ -122,7 +119,7 @@ function uploadProfile(event){
 
 
             localStorage.setItem(
-                username + "_picture",
+                username+"_picture",
                 e.target.result
             );
 
@@ -139,19 +136,18 @@ function uploadProfile(event){
 
     }
 
-
 }
 
 
 
 
-// BANNER
 
+// BANNER IMAGE
 
 function uploadBanner(event){
 
 
-    let username = getUsername();
+    let username=getUsername();
 
 
     let file =
@@ -170,7 +166,7 @@ function uploadBanner(event){
 
 
             localStorage.setItem(
-                username + "_banner",
+                username+"_banner",
                 e.target.result
             );
 
@@ -187,38 +183,32 @@ function uploadBanner(event){
 
     }
 
-
 }
+
 
 
 
 
 // CHANGE NAME
 
-
 function saveProfile(){
 
 
-    let oldName =
-    getUsername();
+    let name =
+    document.getElementById("nameInput").value.trim();
 
 
-    let newName =
-    document.getElementById("nameInput").value;
-
-
-
-    if(newName){
+    if(name){
 
 
         localStorage.setItem(
             "everycorner_username",
-            newName
+            name
         );
 
 
         window.location.href =
-        "profile.html?user=" + newName;
+        "profile.html?user=" + name;
 
 
     }
@@ -229,20 +219,17 @@ function saveProfile(){
 
 
 
-// POSTS
 
+// POSTS
 
 function createPost(){
 
 
-    let username =
-    getUsername();
-
+    let username=getUsername();
 
 
     let text =
-    document.getElementById("postText").value;
-
+    document.getElementById("postText").value.trim();
 
 
     if(text){
@@ -251,7 +238,7 @@ function createPost(){
         let posts =
         JSON.parse(
             localStorage.getItem(
-                username + "_posts"
+                username+"_posts"
             )
         ) || [];
 
@@ -262,7 +249,7 @@ function createPost(){
 
 
         localStorage.setItem(
-            username + "_posts",
+            username+"_posts",
             JSON.stringify(posts)
         );
 
@@ -273,9 +260,7 @@ function createPost(){
 
         loadPosts();
 
-
     }
-
 
 }
 
@@ -285,15 +270,13 @@ function createPost(){
 function loadPosts(){
 
 
-    let username =
-    getUsername();
-
+    let username=getUsername();
 
 
     let posts =
     JSON.parse(
         localStorage.getItem(
-            username + "_posts"
+            username+"_posts"
         )
     ) || [];
 
@@ -327,36 +310,91 @@ function loadPosts(){
 
     }
 
-
 }
 
 
 
 
-// FRIEND REQUEST
+
+// FOLLOW SYSTEM
 
 
-function addFriend(){
+function followUser(){
 
 
-    let username =
-    getUsername();
+    let username=getUsername();
+
+
+    let followers =
+    Number(
+        localStorage.getItem(
+            username+"_followers"
+        )
+    ) || 0;
 
 
 
-    alert(
-        "Friend request sent to " +
-        username
+    followers++;
+
+
+
+    localStorage.setItem(
+        username+"_followers",
+        followers
     );
 
 
+
+    showFollowers();
+
+
 }
 
 
 
 
+function showFollowers(){
 
-document.addEventListener(
-"DOMContentLoaded",
-loadProfile
-);
+
+    let username=getUsername();
+
+
+    let followers =
+    Number(
+        localStorage.getItem(
+            username+"_followers"
+        )
+    ) || 0;
+
+
+
+    let display =
+    document.getElementById("followers");
+
+
+
+    if(display){
+
+
+        if(followers === 1){
+
+            display.innerHTML =
+            "1 Follower";
+
+        }
+        else{
+
+            display.innerHTML =
+            followers + " Followers";
+
+        }
+
+
+    }
+
+}
+
+
+
+
+window.onload = loadProfile;
