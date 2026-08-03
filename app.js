@@ -1,34 +1,146 @@
 // EveryCorner App.js
+// LocalStorage Account Version
 
 
-function getUsername() {
-
-    let params = new URLSearchParams(window.location.search);
-
-    let username = params.get("user");
+// ==========================
+// ACCOUNT SYSTEM
+// ==========================
 
 
-    if(username){
+function createAccount(username, password){
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || {};
+
+
+    if(users[username]){
+
+        return false;
+
+    }
+
+
+    users[username] = {
+
+        password: password,
+
+        followers: 0,
+
+        posts: [],
+
+        picture: "everycorner.png",
+
+        banner: ""
+
+    };
+
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+
+
+    localStorage.setItem(
+        "loggedInUser",
+        username
+    );
+
+
+    return true;
+
+}
+
+
+
+
+
+function login(username,password){
+
+
+    let users =
+    JSON.parse(localStorage.getItem("users")) || {};
+
+
+
+    if(
+        users[username] &&
+        users[username].password === password
+    ){
 
         localStorage.setItem(
-            "everycorner_username",
+            "loggedInUser",
             username
         );
 
-    }
 
-
-    if(!username){
-
-        username =
-        localStorage.getItem(
-            "everycorner_username"
-        );
+        return true;
 
     }
 
 
-    return username || "New User";
+    return false;
+
+}
+
+
+
+
+
+function logout(){
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href="signin.html";
+
+}
+
+
+
+
+function getLoggedInUser(){
+
+    return localStorage.getItem(
+        "loggedInUser"
+    );
+
+}
+
+
+
+
+
+// ==========================
+// PROFILE
+// ==========================
+
+
+function getProfileUser(){
+
+
+    let params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+    let user =
+    params.get("user");
+
+
+
+    if(user){
+
+        return user;
+
+    }
+
+
+
+    return getLoggedInUser();
 
 }
 
@@ -39,11 +151,34 @@ function getUsername() {
 function loadProfile(){
 
 
-    let username = getUsername();
+    let username =
+    getProfileUser();
+
+
+
+    let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    ) || {};
+
+
+
+    let user =
+    users[username];
+
+
+
+    if(!user){
+
+        return;
+
+    }
+
 
 
     let title =
     document.getElementById("cornerName");
+
 
 
     if(title){
@@ -56,38 +191,32 @@ function loadProfile(){
 
 
     let picture =
-    localStorage.getItem(
-        username + "_picture"
-    );
+    document.getElementById("profilePic");
+
 
 
     if(picture){
 
-        document.getElementById("profilePic").src =
-        picture;
+        picture.src =
+        user.picture;
 
     }
 
 
 
-    let banner =
-    localStorage.getItem(
-        username + "_banner"
-    );
+    if(user.banner){
 
-
-    if(banner){
-
-        document.getElementById("banner").style.backgroundImage =
-        "url('" + banner + "')";
+        document.getElementById("banner")
+        .style.backgroundImage =
+        "url('" + user.banner + "')";
 
     }
 
 
-
-    loadPosts();
 
     showFollowers();
+
+    loadPosts();
 
 
 }
@@ -96,15 +225,22 @@ function loadProfile(){
 
 
 
-// PROFILE IMAGE
+// ==========================
+// UPLOAD PROFILE PICTURE
+// ==========================
+
 
 function uploadProfile(event){
 
 
-    let username = getUsername();
+    let username =
+    getLoggedInUser();
+
+
 
     let file =
     event.target.files[0];
+
 
 
     if(file){
@@ -118,14 +254,27 @@ function uploadProfile(event){
         reader.onload=function(e){
 
 
-            localStorage.setItem(
-                username+"_picture",
-                e.target.result
+            let users =
+            JSON.parse(
+                localStorage.getItem("users")
             );
 
 
-            document.getElementById("profilePic").src =
+
+            users[username].picture =
             e.target.result;
+
+
+
+            localStorage.setItem(
+                "users",
+                JSON.stringify(users)
+            );
+
+
+
+            document.getElementById("profilePic")
+            .src=e.target.result;
 
 
         };
@@ -136,22 +285,29 @@ function uploadProfile(event){
 
     }
 
+
 }
 
 
 
 
 
-// BANNER IMAGE
+// ==========================
+// UPLOAD BANNER
+// ==========================
+
 
 function uploadBanner(event){
 
 
-    let username=getUsername();
+    let username =
+    getLoggedInUser();
+
 
 
     let file =
     event.target.files[0];
+
 
 
     if(file){
@@ -165,13 +321,27 @@ function uploadBanner(event){
         reader.onload=function(e){
 
 
-            localStorage.setItem(
-                username+"_banner",
-                e.target.result
+            let users =
+            JSON.parse(
+                localStorage.getItem("users")
             );
 
 
-            document.getElementById("banner").style.backgroundImage =
+
+            users[username].banner =
+            e.target.result;
+
+
+
+            localStorage.setItem(
+                "users",
+                JSON.stringify(users)
+            );
+
+
+
+            document.getElementById("banner")
+            .style.backgroundImage =
             "url('" + e.target.result + "')";
 
 
@@ -189,29 +359,75 @@ function uploadBanner(event){
 
 
 
-// CHANGE NAME
+// ==========================
+// CHANGE USERNAME
+// ==========================
+
 
 function saveProfile(){
 
 
-    let name =
-    document.getElementById("nameInput").value.trim();
+    let oldUsername =
+    getLoggedInUser();
 
 
-    if(name){
+
+    let newUsername =
+    document.getElementById("nameInput")
+    .value.trim();
 
 
-        localStorage.setItem(
-            "everycorner_username",
-            name
-        );
 
+    if(!newUsername){
 
-        window.location.href =
-        "profile.html?user=" + name;
-
+        return;
 
     }
+
+
+
+    let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    );
+
+
+
+    if(users[newUsername]){
+
+        alert("Username already exists");
+
+        return;
+
+    }
+
+
+
+    users[newUsername] =
+    users[oldUsername];
+
+
+
+    delete users[oldUsername];
+
+
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+
+
+
+    localStorage.setItem(
+        "loggedInUser",
+        newUsername
+    );
+
+
+
+    window.location.href =
+    "profile.html?user=" + newUsername;
 
 
 }
@@ -220,49 +436,60 @@ function saveProfile(){
 
 
 
+// ==========================
 // POSTS
+// ==========================
+
 
 function createPost(){
 
 
-    let username=getUsername();
+    let username =
+    getLoggedInUser();
+
 
 
     let text =
-    document.getElementById("postText").value.trim();
-
-
-    if(text){
-
-
-        let posts =
-        JSON.parse(
-            localStorage.getItem(
-                username+"_posts"
-            )
-        ) || [];
+    document.getElementById("postText")
+    .value.trim();
 
 
 
-        posts.push(text);
+    if(!text){
 
-
-
-        localStorage.setItem(
-            username+"_posts",
-            JSON.stringify(posts)
-        );
-
-
-
-        document.getElementById("postText").value="";
-
-
-        loadPosts();
+        return;
 
     }
 
+
+
+    let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    );
+
+
+
+    users[username].posts.push(text);
+
+
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+
+
+
+    document.getElementById("postText")
+    .value="";
+
+
+    loadPosts();
+
+
 }
+
 
 
 
@@ -270,15 +497,15 @@ function createPost(){
 function loadPosts(){
 
 
-    let username=getUsername();
+    let username =
+    getProfileUser();
 
 
-    let posts =
+
+    let users =
     JSON.parse(
-        localStorage.getItem(
-            username+"_posts"
-        )
-    ) || [];
+        localStorage.getItem("users")
+    );
 
 
 
@@ -287,28 +514,32 @@ function loadPosts(){
 
 
 
-    if(area){
+    if(!area || !users[username]){
 
-
-        area.innerHTML="";
-
-
-        posts.forEach(function(post){
-
-
-            area.innerHTML +=
-
-            `
-            <div class="post">
-            ${post}
-            </div>
-            `;
-
-
-        });
-
+        return;
 
     }
+
+
+
+    area.innerHTML="";
+
+
+
+    users[username].posts.forEach(function(post){
+
+
+        area.innerHTML +=
+
+        `
+        <div class="post">
+        ${post}
+        </div>
+        `;
+
+
+    });
+
 
 }
 
@@ -316,31 +547,33 @@ function loadPosts(){
 
 
 
+// ==========================
 // FOLLOW SYSTEM
+// ==========================
 
 
 function followUser(){
 
 
-    let username=getUsername();
-
-
-    let followers =
-    Number(
-        localStorage.getItem(
-            username+"_followers"
-        )
-    ) || 0;
+    let username =
+    getProfileUser();
 
 
 
-    followers++;
+    let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    );
+
+
+
+    users[username].followers++;
 
 
 
     localStorage.setItem(
-        username+"_followers",
-        followers
+        "users",
+        JSON.stringify(users)
     );
 
 
@@ -353,18 +586,32 @@ function followUser(){
 
 
 
+
 function showFollowers(){
 
 
-    let username=getUsername();
+    let username =
+    getProfileUser();
 
 
-    let followers =
-    Number(
-        localStorage.getItem(
-            username+"_followers"
-        )
-    ) || 0;
+
+    let users =
+    JSON.parse(
+        localStorage.getItem("users")
+    );
+
+
+
+    if(!users[username]){
+
+        return;
+
+    }
+
+
+
+    let count =
+    users[username].followers;
 
 
 
@@ -376,25 +623,36 @@ function showFollowers(){
     if(display){
 
 
-        if(followers === 1){
+        if(count === 1){
 
             display.innerHTML =
             "1 Follower";
 
         }
+
         else{
 
             display.innerHTML =
-            followers + " Followers";
+            count + " Followers";
 
         }
 
 
     }
 
+
 }
 
 
 
 
-window.onload = loadProfile;
+
+window.onload=function(){
+
+    if(document.getElementById("cornerName")){
+
+        loadProfile();
+
+    }
+
+};
