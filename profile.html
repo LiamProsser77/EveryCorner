@@ -6,61 +6,150 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Profile - EveryCorner</title>
+<title>Your Corner - EveryCorner</title>
 
 <style>
+
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin:0;
     font-family:Arial,sans-serif;
-    background:white;
+    background:#ffffff;
     color:#222;
 }
 
 
+/* HEADER */
+
 header {
+
     background:#7b1e3a;
     color:white;
     text-align:center;
-    padding:30px;
+    padding:25px;
+
 }
 
 
 header img {
-    width:120px;
+
+    width:90px;
+
 }
 
 
-.profile {
+/* PROFILE */
 
-    max-width:800px;
-    margin:40px auto;
+
+.profile-container {
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+
+/* BANNER */
+
+
+.banner {
+
+    height:250px;
+
+    background:#008c8c;
+
+    background-size:cover;
+
+    background-position:center;
+
+    border-radius:0 0 25px 25px;
+
+}
+
+
+
+.profile-card {
+
+    background:white;
+
+    margin-top:-60px;
+
+    position:relative;
+
     padding:30px;
 
+    border-radius:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+
+    text-align:center;
+
+}
+
+
+
+/* PROFILE IMAGE */
+
+
+.profile-picture {
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid white;
+
+    margin-top:-100px;
+
 }
 
 
-.card {
 
-    background:#fafafa;
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+h1 {
+
+    color:#7b1e3a;
 
 }
+
+
+h2 {
+
+    color:#008c8c;
+
+}
+
+
+
+/* BUTTONS */
 
 
 button {
 
     background:#008c8c;
+
     color:white;
+
     border:none;
+
     padding:12px 25px;
-    border-radius:25px;
+
+    border-radius:30px;
+
     cursor:pointer;
 
+    margin:5px;
+
 }
+
 
 
 button:hover {
@@ -70,25 +159,67 @@ button:hover {
 }
 
 
+/* SETTINGS */
+
+
+.settings {
+
+    background:#fafafa;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    margin-top:25px;
+
+}
+
+
 input, textarea {
 
     width:100%;
+
     padding:12px;
-    margin:10px 0;
+
+    margin:8px 0;
 
     border-radius:10px;
+
     border:1px solid #ddd;
 
 }
 
 
+/* POSTS */
+
+
 .post {
 
     background:white;
-    padding:15px;
-    border-radius:15px;
+
+    padding:20px;
+
     margin-top:15px;
+
+    border-radius:15px;
+
     border-left:5px solid #008c8c;
+
+}
+
+
+
+footer {
+
+    background:#7b1e3a;
+
+    color:white;
+
+    text-align:center;
+
+    padding:20px;
+
+    margin-top:50px;
 
 }
 
@@ -113,21 +244,83 @@ input, textarea {
 
 
 
-<div class="profile">
+<div class="profile-container">
 
 
-<div class="card">
 
-<h2 id="username">
-Your Profile
-</h2>
+<div class="banner" id="banner">
+
+</div>
+
+
+
+
+<div class="profile-card">
+
+
+<img id="profilePic" class="profile-picture" src="everycorner.png">
+
+
+<h1 id="cornerName">
+Your Corner Name
+</h1>
+
 
 <p>
 Followers: 0
 </p>
 
+
+
 <button>
-Edit Profile
+Add Friend
+</button>
+
+
+<button>
+Settings
+</button>
+
+
+
+</div>
+
+
+
+
+<div class="settings">
+
+
+<h2>Profile Settings</h2>
+
+
+
+<label>
+Upload Banner
+</label>
+
+<input type="file" onchange="uploadBanner(event)">
+
+
+
+<label>
+Upload Profile Picture
+</label>
+
+<input type="file" onchange="uploadProfile(event)">
+
+
+
+<label>
+Corner Name
+</label>
+
+<input id="nameInput" placeholder="Enter Corner Name">
+
+
+
+<button onclick="saveProfile()">
+Save Changes
 </button>
 
 
@@ -136,53 +329,16 @@ Edit Profile
 
 
 
-<div class="card">
-
-<h2>Add Friend</h2>
-
-
-<input placeholder="Search users">
-
-
-<button>
-Search
-</button>
-
-
-<h3>Friend Requests</h3>
-
-
-<div>
-
-<p>
-No requests yet
-</p>
-
-
-<button>
-Accept
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="card">
+<div class="settings">
 
 
 <h2>Create Post</h2>
 
 
-<textarea placeholder="Share something..."></textarea>
+<textarea id="postText" placeholder="Share something..."></textarea>
 
 
-<button onclick="createPost()">
+<button onclick="post()">
 Post
 </button>
 
@@ -190,7 +346,6 @@ Post
 
 <div id="posts">
 
-
 </div>
 
 
@@ -199,14 +354,64 @@ Post
 
 
 </div>
+
+
+
+
+<footer>
+
+<p>
+© 2026 EveryCorner. All rights reserved.
+</p>
+
+</footer>
+
+
 
 
 
 <script>
 
-function createPost(){
 
-let text = document.querySelector("textarea").value;
+function uploadBanner(event){
+
+let image = URL.createObjectURL(event.target.files[0]);
+
+document.getElementById("banner").style.backgroundImage =
+"url("+image+")";
+
+}
+
+
+
+function uploadProfile(event){
+
+let image = URL.createObjectURL(event.target.files[0]);
+
+document.getElementById("profilePic").src=image;
+
+}
+
+
+
+function saveProfile(){
+
+let name=document.getElementById("nameInput").value;
+
+
+if(name){
+
+document.getElementById("cornerName").innerHTML=name;
+
+}
+
+}
+
+
+
+function post(){
+
+let text=document.getElementById("postText").value;
 
 
 if(text){
@@ -219,7 +424,7 @@ ${text}
 </div>
 `;
 
-document.querySelector("textarea").value="";
+document.getElementById("postText").value="";
 
 }
 
