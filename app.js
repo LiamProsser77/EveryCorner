@@ -609,6 +609,131 @@ function showFollowers(count){
 
 
 
+// ==========================
+// USER SEARCH
+// ==========================
+
+
+async function searchUsers(){
+
+    let search =
+    document.getElementById("searchUsers").value.trim();
+
+
+    let results =
+    document.getElementById("searchResults");
+
+
+    if(!search){
+
+        results.innerHTML="";
+        return;
+
+    }
+
+
+
+    let {data:users,error} =
+    await supabaseClient
+    .from("profiles")
+    .select("id, username")
+    .ilike("username","%" + search + "%")
+    .limit(5);
+
+
+
+    if(error){
+
+        console.log(error);
+        return;
+
+    }
+
+
+
+    results.innerHTML="";
+
+
+
+    users.forEach(function(user){
+
+
+        results.innerHTML += `
+
+        <div class="post">
+
+        ${user.username}
+
+        <button onclick="sendJoinRequest('${user.id}')">
+
+        Ask to Join Corner
+
+        </button>
+
+        </div>
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+
+// ==========================
+// SEND JOIN REQUEST
+// ==========================
+
+
+async function sendJoinRequest(receiverID){
+
+
+    let current =
+    await getCurrentUser();
+
+
+
+    if(!current){
+
+        alert("Sign in first");
+
+        return;
+
+    }
+
+
+
+    if(current.id === receiverID){
+
+        alert("You cannot request yourself");
+
+        return;
+
+    }
+
+
+
+    await supabaseClient
+    .from("join_requests")
+    .insert({
+
+        sender:current.id,
+
+        receiver:receiverID,
+
+        status:"pending"
+
+    });
+
+
+
+    alert("Request sent!");
+
+}
 
 window.onload=function(){
 
