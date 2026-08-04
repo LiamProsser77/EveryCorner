@@ -164,6 +164,9 @@ async function loadProfile(){
     await getCurrentUser();
 
 
+    console.log(user);
+
+
 
     if(!user){
 
