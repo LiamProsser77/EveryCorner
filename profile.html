@@ -12,13 +12,20 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
+
 body{
 
 margin:0;
-font-family:Arial;
-background:white;
+font-family:Arial,sans-serif;
+background:#ffffff;
+color:#222;
 
 }
+
 
 
 header{
@@ -29,11 +36,13 @@ padding:30px;
 }
 
 
+
 header img{
 
 width:100px;
 
 }
+
 
 
 h1,h2{
@@ -44,9 +53,11 @@ color:#7b1e3a;
 
 
 
+
+
 .banner{
 
-height:260px;
+height:280px;
 background:#008c8c;
 background-size:cover;
 background-position:center;
@@ -56,30 +67,33 @@ background-position:center;
 
 
 
+
 .profile{
 
 max-width:850px;
 margin:-70px auto 30px;
 background:white;
-padding:30px;
+padding:35px;
 text-align:center;
 border-radius:25px;
-box-shadow:0 8px 20px #ccc;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
 
 }
+
 
 
 
 
 .profile-picture{
 
-width:150px;
-height:150px;
+width:160px;
+height:160px;
 border-radius:50%;
 object-fit:cover;
-border:5px solid white;
+border:6px solid white;
 
 }
+
 
 
 
@@ -88,13 +102,15 @@ button{
 
 background:#008c8c;
 color:white;
-border:0;
-padding:12px 25px;
+border:none;
+padding:13px 30px;
 border-radius:30px;
 cursor:pointer;
-margin:5px;
+margin:6px;
+font-weight:bold;
 
 }
+
 
 
 button:hover{
@@ -112,7 +128,7 @@ background:#7b1e3a;
 max-width:850px;
 margin:25px auto;
 background:#fafafa;
-padding:25px;
+padding:30px;
 border-radius:20px;
 
 }
@@ -124,8 +140,18 @@ border-radius:20px;
 input,textarea{
 
 width:100%;
-padding:12px;
+padding:14px;
 margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
+
+}
+
+
+
+textarea{
+
+height:120px;
 
 }
 
@@ -137,7 +163,7 @@ margin:10px 0;
 
 background:white;
 padding:15px;
-margin-top:10px;
+margin-top:15px;
 border-left:5px solid #008c8c;
 border-radius:10px;
 
@@ -151,7 +177,16 @@ footer{
 background:#7b1e3a;
 color:white;
 text-align:center;
-padding:20px;
+padding:25px;
+margin-top:50px;
+
+}
+
+
+
+.hidden{
+
+display:none;
 
 }
 
@@ -179,7 +214,11 @@ padding:20px;
 
 
 
-<div id="banner" class="banner"></div>
+<div 
+id="banner"
+class="banner">
+</div>
+
 
 
 
@@ -188,7 +227,7 @@ padding:20px;
 <div class="profile">
 
 
-<img 
+<img
 id="profilePic"
 class="profile-picture"
 src="everycorner.png">
@@ -196,6 +235,7 @@ src="everycorner.png">
 
 
 <h2 id="cornerName">
+Loading...
 </h2>
 
 
@@ -207,13 +247,21 @@ src="everycorner.png">
 
 
 
-<button onclick="followUser()">
+<button 
+id="followButton"
+onclick="followUser()">
+
 Follow
+
 </button>
 
 
+
+
 <button onclick="logout()">
+
 Logout
+
 </button>
 
 
@@ -226,36 +274,47 @@ Logout
 
 
 
-<div class="box" id="settings">
+<div 
+class="box"
+id="settings">
 
 
-<h2>Settings</h2>
+
+<h2>Corner Settings</h2>
 
 
 
-<p>Upload Profile Picture</p>
+<p>
+Upload Profile Picture
+</p>
 
 
 <input 
 type="file"
+accept="image/*"
 onchange="uploadProfile(event)">
 
 
 
 
 
-<p>Upload Banner</p>
+
+<p>
+Upload Banner
+</p>
 
 
-<input 
+<input
 type="file"
+accept="image/*"
 onchange="uploadBanner(event)">
 
 
 
 
 
-<input 
+
+<input
 id="nameInput"
 placeholder="Change Corner Name">
 
@@ -263,7 +322,7 @@ placeholder="Change Corner Name">
 
 <button onclick="saveProfile()">
 
-Save Name
+Save Corner Name
 
 </button>
 
@@ -277,17 +336,21 @@ Save Name
 
 
 
-<div class="box" id="postBox">
+
+<div 
+class="box"
+id="postBox">
 
 
 <h2>Create Post</h2>
 
 
 
-<textarea 
+<textarea
 id="postText"
-placeholder="Write a post...">
+placeholder="Write something for your Corner...">
 </textarea>
+
 
 
 
@@ -300,12 +363,13 @@ Post
 
 
 
-<div id="posts"></div>
+<div id="posts">
+
+</div>
 
 
 
 </div>
-
 
 
 
@@ -322,14 +386,20 @@ Post
 
 
 
+
+
 <script src="app.js"></script>
+
+
+
 
 
 
 <script>
 
 
-// Hide settings when viewing another person
+window.onload=function(){
+
 
 let params =
 new URLSearchParams(
@@ -348,10 +418,13 @@ localStorage.getItem(
 
 
 
+// If viewing another person
+
 if(
 profileUser &&
 profileUser !== loggedUser
 ){
+
 
 document.getElementById("settings")
 .style.display="none";
@@ -361,8 +434,28 @@ document.getElementById("postBox")
 .style.display="none";
 
 
+document.getElementById("followButton")
+.style.display="inline-block";
+
+
 }
 
+
+
+// Your own profile
+
+else{
+
+
+document.getElementById("followButton")
+.style.display="none";
+
+
+}
+
+
+
+};
 
 
 
