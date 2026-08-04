@@ -1,108 +1,76 @@
 // EveryCorner App.js
-// LocalStorage Social Profile System
+// Supabase Version
 
 
-// =============================
+// ==========================
 // ACCOUNT SYSTEM
-// =============================
+// ==========================
 
 
-function getUsers(){
-
-    return JSON.parse(
-        localStorage.getItem("users")
-    ) || {};
-
-}
-
-
-
-function saveUsers(users){
-
-    localStorage.setItem(
-        "users",
-        JSON.stringify(users)
-    );
-
-}
-
-
-
-
-
-function createAccount(event){
+async function createAccount(event){
 
     event.preventDefault();
 
 
     let username =
-    document.getElementById("username")
-    .value.trim();
+    document.getElementById("username").value.trim();
 
+
+    let email =
+    document.getElementById("email").value.trim();
 
 
     let password =
-    document.getElementById("password")
-    .value;
+    document.getElementById("password").value;
 
 
 
-    if(!username || !password){
+    const { data, error } =
+    await supabaseClient.auth.signUp({
 
-        alert("Fill in all fields");
+        email: email,
+
+        password: password
+
+    });
+
+
+
+    if(error){
+
+        alert(error.message);
+
         return;
 
     }
 
 
 
-    let users = getUsers();
+    await supabaseClient
+    .from("profiles")
+    .insert({
+
+        id: data.user.id,
+
+        username: username,
+
+        email: email,
+
+        picture: "everycorner.png",
+
+        banner: "",
+
+        followers: 0
+
+    });
 
 
 
-    if(users[username]){
-
-        alert("Username already exists");
-        return;
-
-    }
-
-
-
-    users[username]={
-
-        password:password,
-
-        followers:[],
-
-        following:[],
-
-        posts:[],
-
-        picture:"everycorner.png",
-
-        banner:"",
-
-        created:new Date().toISOString()
-
-    };
-
-
-
-    saveUsers(users);
-
-
-
-    localStorage.setItem(
-        "loggedInUser",
-        username
-    );
-
+    alert("Account created!");
 
 
     window.location.href =
-    "profile.html?user=" + username;
-
+    "profile.html";
 
 }
 
@@ -110,65 +78,56 @@ function createAccount(event){
 
 
 
-function signIn(event){
+async function signIn(event){
 
     event.preventDefault();
 
 
-
-    let username =
-    document.getElementById("username")
-    .value.trim();
-
+    let email =
+    document.getElementById("email").value;
 
 
     let password =
-    document.getElementById("password")
-    .value;
+    document.getElementById("password").value;
 
 
 
-    let users = getUsers();
+    const { error } =
+    await supabaseClient.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
+
+    });
 
 
 
-    if(
-        !users[username] ||
-        users[username].password !== password
-    ){
+    if(error){
 
-        alert("Incorrect username or password");
+        alert(error.message);
+
         return;
 
     }
 
 
+    window.location.href =
+    "profile.html";
 
-    localStorage.setItem(
-        "loggedInUser",
-        username
-    );
+}
 
+
+
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
 
 
     window.location.href =
-    "profile.html?user=" + username;
-
-
-}
-
-
-
-
-
-function logout(){
-
-    localStorage.removeItem(
-        "loggedInUser"
-    );
-
-
-    window.location.href="signin.html";
+    "signin.html";
 
 }
 
@@ -176,11 +135,16 @@ function logout(){
 
 
 
-function getLoggedInUser(){
+async function getCurrentUser(){
 
-    return localStorage.getItem(
-        "loggedInUser"
-    );
+    const {
+
+        data
+
+    } = await supabaseClient.auth.getUser();
+
+
+    return data.user;
 
 }
 
@@ -188,64 +152,23 @@ function getLoggedInUser(){
 
 
 
-
-// =============================
+// ==========================
 // PROFILE LOADING
-// =============================
+// ==========================
 
 
-
-function getProfileUser(){
-
-    let params =
-    new URLSearchParams(
-        window.location.search
-    );
+async function loadProfile(){
 
 
     let user =
-    params.get("user");
-
-
-
-    if(user){
-
-        return user;
-
-    }
-
-
-
-    return getLoggedInUser();
-
-}
-
-
-
-
-
-function loadProfile(){
-
-
-    let username =
-    getProfileUser();
-
-
-
-    let users =
-    getUsers();
-
-
-
-    let user =
-    users[username];
+    await getCurrentUser();
 
 
 
     if(!user){
 
-        document.getElementById("cornerName")
-        .innerHTML="User not found";
+        document.getElementById("cornerName").innerHTML =
+        "Please sign in";
 
         return;
 
@@ -253,86 +176,63 @@ function loadProfile(){
 
 
 
-
-    let name =
-    document.getElementById("cornerName");
-
-
-
-    if(name){
-
-        name.innerHTML =
-        username + "'s Corner";
-
-    }
+    let {data:profile,error} =
+    await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
 
 
 
+    if(error){
 
-    let pic =
-    document.getElementById("profilePic");
+        console.log(error);
 
-
-
-    if(pic){
-
-        pic.src =
-        user.picture || "everycorner.png";
+        return;
 
     }
 
 
 
+    document.getElementById("cornerName")
+    .innerHTML =
+    profile.username + "'s Corner";
 
 
-    let banner =
-    document.getElementById("banner");
+
+    document.getElementById("profilePic")
+    .src =
+    profile.picture;
 
 
 
-    if(
-        banner &&
-        user.banner
-    ){
+    if(profile.banner){
 
-        banner.style.backgroundImage =
-        "url('" + user.banner + "')";
+        document.getElementById("banner")
+        .style.backgroundImage =
+        "url('" + profile.banner + "')";
 
     }
 
 
 
-    showFollowers();
+    showFollowers(profile.followers);
 
-    loadPosts();
-
+    loadPosts(profile.username);
 
 
 }
 
+// ==========================
+// PROFILE UPLOADS
+// ==========================
 
 
-
-
-
-
-// =============================
-// IMAGE UPLOADS
-// =============================
-
-
-
-function uploadProfile(event){
-
-
-    let username =
-    getLoggedInUser();
-
-
+async function uploadProfile(event){
 
     let file =
     event.target.files[0];
-
 
 
     if(!file){
@@ -342,39 +242,39 @@ function uploadProfile(event){
     }
 
 
+    let user =
+    await getCurrentUser();
+
 
     let reader =
     new FileReader();
 
 
 
-    reader.onload=function(e){
+    reader.onload = async function(e){
 
 
-        let users =
-        getUsers();
+        await supabaseClient
+        .from("profiles")
+        .update({
 
+            picture:e.target.result
 
+        })
 
-        users[username].picture =
-        e.target.result;
-
-
-
-        saveUsers(users);
+        .eq("id",user.id);
 
 
 
         document.getElementById("profilePic")
-        .src=e.target.result;
+        .src =
+        e.target.result;
 
 
     };
 
 
-
     reader.readAsDataURL(file);
-
 
 }
 
@@ -382,17 +282,11 @@ function uploadProfile(event){
 
 
 
-function uploadBanner(event){
-
-
-    let username =
-    getLoggedInUser();
-
+async function uploadBanner(event){
 
 
     let file =
     event.target.files[0];
-
 
 
     if(!file){
@@ -403,25 +297,28 @@ function uploadBanner(event){
 
 
 
+    let user =
+    await getCurrentUser();
+
+
+
     let reader =
     new FileReader();
 
 
 
-    reader.onload=function(e){
+    reader.onload = async function(e){
 
 
-        let users =
-        getUsers();
+        await supabaseClient
+        .from("profiles")
+        .update({
 
+            banner:e.target.result
 
+        })
 
-        users[username].banner =
-        e.target.result;
-
-
-
-        saveUsers(users);
+        .eq("id",user.id);
 
 
 
@@ -439,78 +336,51 @@ function uploadBanner(event){
 
 }
 
-// =============================
-// CHANGE CORNER NAME
-// =============================
-
-
-function saveProfile(){
-
-
-    let oldUsername =
-    getLoggedInUser();
 
 
 
-    let newUsername =
+
+// ==========================
+// CHANGE NAME
+// ==========================
+
+
+async function saveProfile(){
+
+
+    let name =
     document.getElementById("nameInput")
     .value.trim();
 
 
 
-    if(!newUsername){
+    if(!name){
 
-        alert("Enter a name");
         return;
 
     }
 
 
 
-    let users =
-    getUsers();
+    let user =
+    await getCurrentUser();
 
 
 
-    if(
-        users[newUsername] &&
-        newUsername !== oldUsername
-    ){
+    await supabaseClient
+    .from("profiles")
+    .update({
 
-        alert("That username already exists");
-        return;
+        username:name
 
-    }
+    })
 
-
-
-    if(newUsername !== oldUsername){
-
-
-        users[newUsername] =
-        users[oldUsername];
-
-
-        delete users[oldUsername];
-
-
-
-        localStorage.setItem(
-            "loggedInUser",
-            newUsername
-        );
-
-    }
-
-
-
-    saveUsers(users);
+    .eq("id",user.id);
 
 
 
     window.location.href =
-    "profile.html?user=" + newUsername;
-
+    "profile.html";
 
 }
 
@@ -518,19 +388,12 @@ function saveProfile(){
 
 
 
-
-// =============================
+// ==========================
 // POSTS
-// =============================
+// ==========================
 
 
-
-function createPost(){
-
-
-    let username =
-    getLoggedInUser();
-
+async function createPost(){
 
 
     let text =
@@ -547,22 +410,29 @@ function createPost(){
 
 
 
-    let users =
-    getUsers();
+    let user =
+    await getCurrentUser();
 
 
 
-    users[username].posts.push({
+    let {data:profile} =
+    await supabaseClient
+    .from("profiles")
+    .select("username")
+    .eq("id",user.id)
+    .single();
 
-        text:text,
 
-        date:new Date().toISOString()
+
+    await supabaseClient
+    .from("posts")
+    .insert({
+
+        username:profile.username,
+
+        content:text
 
     });
-
-
-
-    saveUsers(users);
 
 
 
@@ -570,8 +440,7 @@ function createPost(){
     .value="";
 
 
-
-    loadPosts();
+    loadPosts(profile.username);
 
 
 }
@@ -580,25 +449,18 @@ function createPost(){
 
 
 
-
-function loadPosts(){
-
-
-    let username =
-    getProfileUser();
+async function loadPosts(username){
 
 
-
-    let users =
-    getUsers();
-
-
-
-    if(!users[username]){
-
-        return;
-
-    }
+    let {data:posts} =
+    await supabaseClient
+    .from("posts")
+    .select("*")
+    .eq("username",username)
+    .order("created_at",
+    {
+        ascending:false
+    });
 
 
 
@@ -619,21 +481,16 @@ function loadPosts(){
 
 
 
-    users[username].posts
-    .forEach(function(post){
-
+    posts.forEach(function(post){
 
 
         area.innerHTML +=
 
         `
         <div class="post">
-
-        ${post.text}
-
+        ${post.content}
         </div>
         `;
-
 
 
     });
@@ -645,92 +502,73 @@ function loadPosts(){
 
 
 
-
-
-// =============================
+// ==========================
 // FOLLOW SYSTEM
-// =============================
+// ==========================
+
+
+async function followUser(){
+
+
+    let user =
+    await getCurrentUser();
 
 
 
-function followUser(){
-
-
-    let target =
-    getProfileUser();
-
-
-
-    let follower =
-    getLoggedInUser();
-
-
-
-    if(!follower){
+    if(!user){
 
         alert("Sign in first");
+
         return;
 
     }
 
 
 
-    if(!target){
-
-        alert("Profile not found");
-        return;
-
-    }
+    let params =
+    new URLSearchParams(
+        window.location.search
+    );
 
 
-
-    if(target === follower){
-
-        alert("You cannot follow yourself");
-        return;
-
-    }
+    let profileID =
+    params.get("id");
 
 
 
-    let users =
-    getUsers();
-
-
-
-    if(!users[target]){
+    if(!profileID){
 
         alert("User not found");
+
         return;
 
     }
 
 
 
-    if(
-        users[target].followers
-        .includes(follower)
-    ){
+    if(profileID === user.id){
 
-        alert("You already follow this Corner");
+        alert("You cannot follow yourself");
+
         return;
 
     }
 
 
 
-    users[target]
-    .followers
-    .push(follower);
+    await supabaseClient
+    .from("followers")
+    .insert({
+
+        follower:user.id,
+
+        following:profileID
+
+    });
 
 
 
-    saveUsers(users);
-
-
-
-    showFollowers();
-
+    alert("Followed!");
 
 }
 
@@ -738,34 +576,7 @@ function followUser(){
 
 
 
-
-
-
-function showFollowers(){
-
-
-    let username =
-    getProfileUser();
-
-
-
-    let users =
-    getUsers();
-
-
-
-    if(!users[username]){
-
-        return;
-
-    }
-
-
-
-    let amount =
-    users[username]
-    .followers.length;
-
+function showFollowers(count){
 
 
     let display =
@@ -773,25 +584,22 @@ function showFollowers(){
 
 
 
-    if(!display){
-
-        return;
-
-    }
+    if(display){
 
 
+        if(count === 1){
 
-    if(amount === 1){
+            display.innerHTML =
+            "1 Follower";
 
-        display.innerHTML =
-        "1 Follower";
+        }
 
-    }
+        else{
 
-    else{
+            display.innerHTML =
+            count + " Followers";
 
-        display.innerHTML =
-        amount + " Followers";
+        }
 
     }
 
@@ -799,106 +607,10 @@ function showFollowers(){
 }
 
 
-
-
-
-
-
-// =============================
-// PROFILE VIEW CONTROLS
-// =============================
-
-
-
-function setupProfileView(){
-
-
-    let profileUser =
-    getProfileUser();
-
-
-
-    let loggedUser =
-    getLoggedInUser();
-
-
-
-    let settings =
-    document.getElementById("settings");
-
-
-
-    let postBox =
-    document.getElementById("postBox");
-
-
-
-    let followButton =
-    document.getElementById("followButton");
-
-
-
-    if(
-        profileUser &&
-        profileUser !== loggedUser
-    ){
-
-
-        if(settings){
-
-            settings.style.display="none";
-
-        }
-
-
-
-        if(postBox){
-
-            postBox.style.display="none";
-
-        }
-
-
-
-        if(followButton){
-
-            followButton.style.display="inline-block";
-
-        }
-
-
-    }
-
-    else{
-
-
-        if(followButton){
-
-            followButton.style.display="none";
-
-        }
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-// =============================
-// START APP
-// =============================
 
 
 
 window.onload=function(){
-
 
     if(
         document.getElementById("cornerName")
@@ -906,9 +618,6 @@ window.onload=function(){
 
         loadProfile();
 
-        setupProfileView();
-
     }
-
 
 };
