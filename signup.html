@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Create Account - EveryCorner</title>
@@ -12,94 +11,91 @@
 
 <style>
 
-body {
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:white;
+}
 
-margin:0;
-font-family:Arial,sans-serif;
-background:white;
+
+header{
+    text-align:center;
+    padding:40px;
+}
+
+
+header img{
+    width:150px;
+}
+
+
+h1{
+    color:#7b1e3a;
+}
+
+
+.box{
+
+    max-width:400px;
+    margin:auto;
+    background:#fafafa;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
 
 }
 
 
-header {
+h2{
 
-text-align:center;
-padding:40px;
-
-}
-
-
-header img {
-
-width:150px;
+    color:#008c8c;
+    text-align:center;
 
 }
 
 
-h1 {
+input{
 
-color:#7b1e3a;
-
-}
-
-
-.box {
-
-max-width:400px;
-margin:auto;
-background:#fafafa;
-padding:35px;
-border-radius:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.1);
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+    border:1px solid #ddd;
+    box-sizing:border-box;
 
 }
 
 
-h2 {
 
-color:#008c8c;
-text-align:center;
+button{
 
-}
-
-
-input {
-
-width:100%;
-padding:15px;
-margin:10px 0;
-border-radius:10px;
-border:1px solid #ddd;
+    width:100%;
+    padding:15px;
+    background:#008c8c;
+    color:white;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
 
 }
 
 
-button {
 
-width:100%;
-padding:15px;
-background:#008c8c;
-color:white;
-border:none;
-border-radius:30px;
-font-weight:bold;
-cursor:pointer;
+button:hover{
+
+    background:#7b1e3a;
 
 }
 
 
-button:hover {
 
-background:#7b1e3a;
+a{
 
-}
-
-
-a {
-
-color:#008c8c;
+    color:#008c8c;
 
 }
+
 
 </style>
 
@@ -108,6 +104,7 @@ color:#008c8c;
 
 
 <body>
+
 
 
 <header>
@@ -123,6 +120,7 @@ color:#008c8c;
 
 
 
+
 <div class="box">
 
 
@@ -130,30 +128,55 @@ color:#008c8c;
 
 
 
-<form onsubmit="signup(event)">
+<form onsubmit="createAccount(event)">
 
 
 
-<input 
+<input
+
 id="username"
+
 type="text"
+
 placeholder="Choose Username"
+
 required>
 
 
 
 
 <input
-id="password"
-type="password"
-placeholder="Create Password"
+
+id="email"
+
+type="email"
+
+placeholder="Email"
+
 required>
 
 
 
 
-<button type="submit">
+
+<input
+
+id="password"
+
+type="password"
+
+placeholder="Password"
+
+required>
+
+
+
+
+
+<button>
+
 Create Account
+
 </button>
 
 
@@ -162,8 +185,6 @@ Create Account
 
 
 
-<p id="message"></p>
-
 
 
 <p>
@@ -171,10 +192,13 @@ Create Account
 Already have an account?
 
 <a href="signin.html">
+
 Sign In
+
 </a>
 
 </p>
+
 
 
 </div>
@@ -184,79 +208,6 @@ Sign In
 
 
 <script src="app.js"></script>
-
-
-
-<script>
-
-
-function signup(event){
-
-
-event.preventDefault();
-
-
-
-let username =
-document.getElementById("username").value.trim();
-
-
-
-let password =
-document.getElementById("password").value;
-
-
-
-let result =
-createAccount(
-username,
-password
-);
-
-
-
-let message =
-document.getElementById("message");
-
-
-
-if(result){
-
-
-message.innerHTML =
-"Account created! Redirecting...";
-
-
-
-setTimeout(function(){
-
-
-window.location.href =
-"profile.html?user=" + username;
-
-
-
-},1000);
-
-
-
-}
-
-else{
-
-
-message.innerHTML =
-"Username already exists";
-
-
-}
-
-
-}
-
-
-</script>
-
 
 
 </body>
