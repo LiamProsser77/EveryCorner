@@ -159,24 +159,84 @@ async function getCurrentUser(){
 
 async function loadProfile(){
 
+    let params = new URLSearchParams(
+        window.location.search
+    );
 
-    let user =
-    await getCurrentUser();
-
-
-    console.log(user);
-
+    let username = params.get("user");
 
 
-    if(!user){
+    let query =
+    supabaseClient
+    .from("profiles")
+    .select("*");
+
+
+    if(username){
+
+        query = query.eq(
+            "username",
+            username
+        );
+
+    } else {
+
+        let user =
+        await getCurrentUser();
+
+
+        if(!user){
+
+            document.getElementById("cornerName").innerHTML =
+            "Sign in first";
+
+            return;
+
+        }
+
+
+        query = query.eq(
+            "id",
+            user.id
+        );
+
+    }
+
+
+    let {data,error} =
+    await query.single();
+
+
+
+    if(error){
+
+        console.log(error);
 
         document.getElementById("cornerName").innerHTML =
-        "Please sign in";
+        "Profile not found";
 
         return;
 
     }
 
+
+
+    document.getElementById("cornerName").innerHTML =
+    data.username + "'s Corner";
+
+
+    document.getElementById("profilePic").src =
+    data.picture || "everycorner.png";
+
+
+    if(data.banner){
+
+        document.getElementById("banner").style.backgroundImage =
+        "url('" + data.banner + "')";
+
+    }
+
+}
 
 
     let {data:profile,error} =
