@@ -21,11 +21,10 @@ body{
 
 margin:0;
 font-family:Arial,sans-serif;
-background:#ffffff;
+background:white;
 color:#222;
 
 }
-
 
 
 header{
@@ -36,13 +35,11 @@ padding:30px;
 }
 
 
-
 header img{
 
 width:100px;
 
 }
-
 
 
 h1,h2{
@@ -63,7 +60,6 @@ background-size:cover;
 background-position:center;
 
 }
-
 
 
 
@@ -106,8 +102,8 @@ border:none;
 padding:13px 30px;
 border-radius:30px;
 cursor:pointer;
-margin:6px;
 font-weight:bold;
+margin:5px;
 
 }
 
@@ -122,13 +118,12 @@ background:#7b1e3a;
 
 
 
-
 .box{
 
 max-width:850px;
 margin:25px auto;
-background:#fafafa;
 padding:30px;
+background:#fafafa;
 border-radius:20px;
 
 }
@@ -146,6 +141,7 @@ border-radius:10px;
 border:1px solid #ddd;
 
 }
+
 
 
 
@@ -172,6 +168,7 @@ border-radius:10px;
 
 
 
+
 footer{
 
 background:#7b1e3a;
@@ -179,14 +176,6 @@ color:white;
 text-align:center;
 padding:25px;
 margin-top:50px;
-
-}
-
-
-
-.hidden{
-
-display:none;
 
 }
 
@@ -214,6 +203,7 @@ display:none;
 
 
 
+
 <div 
 id="banner"
 class="banner">
@@ -228,27 +218,40 @@ class="banner">
 
 
 <img
+
 id="profilePic"
+
 class="profile-picture"
-src="everycorner.png">
+
+src="everycorner.png"
+
+>
+
 
 
 
 <h2 id="cornerName">
+
 Loading...
+
 </h2>
 
 
 
+
 <p id="followers">
+
 0 Followers
+
 </p>
 
 
 
 
-<button 
+<button
+
 id="followButton"
+
 onclick="followUser()">
 
 Follow
@@ -258,7 +261,10 @@ Follow
 
 
 
-<button onclick="logout()">
+
+<button
+
+onclick="logout()">
 
 Logout
 
@@ -274,24 +280,37 @@ Logout
 
 
 
-<div 
+
+<div
+
 class="box"
+
 id="settings">
 
 
+<h2>
 
-<h2>Corner Settings</h2>
+Corner Settings
+
+</h2>
+
 
 
 
 <p>
+
 Upload Profile Picture
+
 </p>
 
 
-<input 
+
+<input
+
 type="file"
+
 accept="image/*"
+
 onchange="uploadProfile(event)">
 
 
@@ -300,27 +319,38 @@ onchange="uploadProfile(event)">
 
 
 <p>
+
 Upload Banner
+
 </p>
 
 
+
 <input
+
 type="file"
+
 accept="image/*"
+
 onchange="uploadBanner(event)">
 
 
 
 
 
-
 <input
+
 id="nameInput"
+
 placeholder="Change Corner Name">
 
 
 
-<button onclick="saveProfile()">
+
+
+<button
+
+onclick="saveProfile()">
 
 Save Corner Name
 
@@ -337,24 +367,37 @@ Save Corner Name
 
 
 
-<div 
+
+<div
+
 class="box"
+
 id="postBox">
 
 
-<h2>Create Post</h2>
+<h2>
+
+Create Post
+
+</h2>
+
 
 
 
 <textarea
+
 id="postText"
-placeholder="Write something for your Corner...">
+
+placeholder="Write a post...">
+
 </textarea>
 
 
 
 
-<button onclick="createPost()">
+<button
+
+onclick="createPost()">
 
 Post
 
@@ -363,13 +406,19 @@ Post
 
 
 
-<div id="posts">
+
+
+<div
+
+id="posts">
 
 </div>
 
 
 
 </div>
+
+
 
 
 
@@ -386,81 +435,7 @@ Post
 
 
 
-
-
 <script src="app.js"></script>
-
-
-
-
-
-
-<script>
-
-
-window.onload=function(){
-
-
-let params =
-new URLSearchParams(
-window.location.search
-);
-
-
-let profileUser =
-params.get("user");
-
-
-let loggedUser =
-localStorage.getItem(
-"loggedInUser"
-);
-
-
-
-// If viewing another person
-
-if(
-profileUser &&
-profileUser !== loggedUser
-){
-
-
-document.getElementById("settings")
-.style.display="none";
-
-
-document.getElementById("postBox")
-.style.display="none";
-
-
-document.getElementById("followButton")
-.style.display="inline-block";
-
-
-}
-
-
-
-// Your own profile
-
-else{
-
-
-document.getElementById("followButton")
-.style.display="none";
-
-
-}
-
-
-
-};
-
-
-
-</script>
-
 
 
 </body>
