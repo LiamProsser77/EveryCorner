@@ -1,71 +1,42 @@
 // EveryCorner Friend Requests
 
-
 console.log("requests.js loaded");
-
-
-// ==========================
-// CHECK INCOMING REQUESTS
-// ==========================
 
 async function checkFriendRequests(){
 
-
     const user = await getCurrentUser();
 
-
     if(!user){
-
         console.log("No user logged in");
-
         return;
-
     }
-
 
 
     const { data, error } =
     await supabaseClient
     .from("join_requests")
     .select("*")
-    .eq(
-        "recver",
-        user.id
-    )
-    .eq(
-        "stsaus",
-        "pending"
-    );
-
+    .eq("recver", user.id)
+    .eq("stsaus", "pending");
 
 
     if(error){
 
-        console.log("Request error:", error);
+        console.log(error);
 
         return;
 
     }
 
 
-
-    console.log(
-        "Incoming requests:",
-        data
-    );
-
+    console.log("Incoming requests:", data);
 
 
     if(!data || data.length === 0){
 
-        console.log(
-            "No friend requests"
-        );
-
         return;
 
     }
-
 
 
     const popup =
@@ -74,21 +45,16 @@ async function checkFriendRequests(){
     );
 
 
-
     if(!popup){
 
-        console.log(
-            "friendRequestPopup HTML missing"
-        );
+        console.log("Popup element missing");
 
         return;
 
     }
 
 
-
     popup.style.display = "block";
-
 
 
     popup.innerHTML = `
@@ -96,14 +62,12 @@ async function checkFriendRequests(){
     <h3>Friend Request</h3>
 
     <p>
-    You have a friend request!
+    You have a new friend request!
     </p>
-
 
     <button>
     Accept
     </button>
-
 
     <button>
     Decline
@@ -111,16 +75,8 @@ async function checkFriendRequests(){
 
     `;
 
-
 }
 
-
-
-
-
-// ==========================
-// START
-// ==========================
 
 window.addEventListener(
 "load",
