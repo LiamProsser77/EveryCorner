@@ -537,6 +537,15 @@ async function logout(){
 
 window.onload = function(){
 
+    if(document.getElementById("cornerName")){
+
+        loadProfile();
+
+    }
+
+    loadFriendCount();
+
+};
 
     if(
         document.getElementById("cornerName")
