@@ -24,14 +24,21 @@ async function createAccount(event){
 
 
 
-    const { data, error } =
-    await supabaseClient.auth.signUp({
+    const { data: uploadData, error } =
+await supabaseClient
+.storage
+.from("profiles")
+.upload(
+    filePath,
+    file,
+    {
+        upsert:true
+    }
+);
 
-        email: email,
 
-        password: password
-
-    });
+console.log(uploadData);
+console.log(error);
 
 
 
