@@ -1,26 +1,25 @@
 // EveryCorner App.js
-// Supabase Version
+// Clean Supabase Version
 
 
 // ==========================
-// ACCOUNT SYSTEM
+// CREATE ACCOUNT
 // ==========================
-
 
 async function createAccount(event){
 
     event.preventDefault();
 
 
-    let username =
+    const username =
     document.getElementById("username").value.trim();
 
 
-    let email =
+    const email =
     document.getElementById("email").value.trim();
 
 
-    let password =
+    const password =
     document.getElementById("password").value;
 
 
@@ -56,7 +55,7 @@ async function createAccount(event){
 
 
 
-    let { error: profileError } =
+    const { error: profileError } =
     await supabaseClient
     .from("profiles")
     .insert({
@@ -89,7 +88,6 @@ async function createAccount(event){
 
     alert("Account created!");
 
-
     window.location.href =
     "profile.html";
 
@@ -98,22 +96,22 @@ async function createAccount(event){
 
 
 
-
 // ==========================
 // SIGN IN
 // ==========================
-
 
 async function signIn(event){
 
     event.preventDefault();
 
 
-    let email =
+
+    const email =
     document.getElementById("email").value;
 
 
-    let password =
+
+    const password =
     document.getElementById("password").value;
 
 
@@ -152,89 +150,39 @@ async function signIn(event){
 // GET CURRENT USER
 // ==========================
 
-
 async function getCurrentUser(){
 
-    const {
-
-        data
-
-    } =
+    const {data} =
     await supabaseClient.auth.getUser();
 
 
     return data.user;
 
 }
-// ==========================
-// PROFILE LOADING
-// ==========================
 
+// ==========================
+// LOAD PROFILE
+// ==========================
 
 async function loadProfile(){
 
-    let params = new URLSearchParams(
-        window.location.search
-    );
 
-
-    let username =
-    params.get("user");
-
-
-    let query =
-    supabaseClient
-    .from("profiles")
-    .select("*");
+    const user =
+    await getCurrentUser();
 
 
 
-    if(username){
+    if(!user){
 
-        query =
-        query.eq(
-            "username",
-            username
-        );
+        const name =
+        document.getElementById("cornerName");
 
-    } else {
+        if(name){
 
-
-        let user =
-        await getCurrentUser();
-
-
-        if(!user){
-
-            document.getElementById("cornerName").innerHTML =
+            name.innerHTML =
             "Sign in first";
 
-            return;
-
         }
-
-
-        query =
-        query.eq(
-            "id",
-            user.id
-        );
-
-    }
-
-
-
-    let {data,error} =
-    await query.single();
-
-
-
-    if(error){
-
-        console.log(error);
-
-        document.getElementById("cornerName").innerHTML =
-        "Profile not found";
 
         return;
 
@@ -242,32 +190,7 @@ async function loadProfile(){
 
 
 
-    document.getElementById("cornerName").innerHTML =
-    data.username;
-
-
-
-    if(document.getElementById("profilePic")){
-
-        document.getElementById("profilePic").src =
-        data.picture || "everycorner.png";
-
-    }
-
-
-
-    if(document.getElementById("banner")){
-
-        document.getElementById("banner").style.backgroundImage =
-        "url('" + data.banner + "')";
-
-    }
-
-}
-
-
-
-    let { data, error } =
+    const { data, error } =
     await supabaseClient
     .from("profiles")
     .select("*")
@@ -294,6 +217,15 @@ async function loadProfile(){
 
 
 
+    if(document.getElementById("followers")){
+
+        document.getElementById("followers").innerHTML =
+        data.followers + " Followers";
+
+    }
+
+
+
     if(document.getElementById("profilePic")){
 
         document.getElementById("profilePic").src =
@@ -305,8 +237,12 @@ async function loadProfile(){
 
     if(document.getElementById("banner")){
 
-        document.getElementById("banner").style.backgroundImage =
-        "url('" + data.banner + "')";
+        if(data.banner){
+
+            document.getElementById("banner").style.backgroundImage =
+            "url('" + data.banner + "')";
+
+        }
 
     }
 
@@ -318,64 +254,18 @@ async function loadProfile(){
 
 
 // ==========================
-// SEND JOIN REQUEST
+// LOGOUT
 // ==========================
 
-
-async function sendJoinRequest(receiverID){
-
-
-    let current =
-    await getCurrentUser();
+async function logout(){
 
 
-
-    if(!current){
-
-        alert("Sign in first");
-
-        return;
-
-    }
+    await supabaseClient.auth.signOut();
 
 
+    window.location.href =
+    "signin.html";
 
-    if(current.id === receiverID){
-
-        alert("You cannot request yourself");
-
-        return;
-
-    }
-
-
-
-    const { error } =
-    await supabaseClient
-    .from("join_requests")
-    .insert({
-
-        sender:current.id,
-
-        receiver:receiverID,
-
-        status:"pending"
-
-    });
-
-
-
-    if(error){
-
-        alert(error.message);
-
-        return;
-
-    }
-
-
-
-    alert("Request sent!");
 
 }
 
@@ -384,16 +274,13 @@ async function sendJoinRequest(receiverID){
 
 
 // ==========================
-// LOAD PROFILE PAGE
+// PAGE START
 // ==========================
 
+window.onload = function(){
 
-window.onload=function(){
 
-
-    if(
-        document.getElementById("cornerName")
-    ){
+    if(document.getElementById("cornerName")){
 
         loadProfile();
 
