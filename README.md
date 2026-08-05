@@ -12,3 +12,18 @@ EveryCorner is the first social platform where groups—not individuals—are th
 - Then, Enter your Name, Email, and Password
 
 - Your all set!
+
+## EveryCorner's Policy's 
+
+Be kind - EveryCorner takes this seriously be kind to others, and show respect.
+
+No racist comments or words - If found or reported by email user will be banned right away.
+
+## What happens when these are broken?
+
+- User gets a restricted account
+- User is banned
+- User is forced to Logout
+
+
+#### Thank you to Supabase for making this possible!
