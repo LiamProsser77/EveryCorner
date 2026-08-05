@@ -159,6 +159,8 @@ async function getCurrentUser(){
 
 async function loadProfile(){
 
+    console.log("loadProfile started");
+
     let params = new URLSearchParams(
         window.location.search
     );
