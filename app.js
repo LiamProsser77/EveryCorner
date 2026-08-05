@@ -1,3 +1,5 @@
+alert("app.js loaded");
+
 // EveryCorner App.js
 // Supabase Version
 
