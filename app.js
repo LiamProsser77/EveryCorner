@@ -279,7 +279,75 @@ async function logout(){
 
 async function uploadProfile(event){
 
-    alert("upload button works");
+    const file = event.target.files[0];
+
+    if(!file){
+        return;
+    }
+
+
+    const user = await getCurrentUser();
+
+
+    if(!user){
+
+        alert("Sign in first");
+
+        return;
+
+    }
+
+
+    const filePath =
+    user.id + "/profile.png";
+
+
+    const { error } =
+    await supabaseClient
+    .storage
+    .from("profiles")
+    .upload(
+        filePath,
+        file,
+        {
+            upsert:true
+        }
+    );
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    const { data } =
+    supabaseClient
+    .storage
+    .from("profiles")
+    .getPublicUrl(filePath);
+
+
+
+    await supabaseClient
+    .from("profiles")
+    .update({
+
+        picture:data.publicUrl
+
+    })
+    .eq(
+        "id",
+        user.id
+    );
+
+
+    alert("Profile picture saved!");
+
+    location.reload();
 
 }
 
