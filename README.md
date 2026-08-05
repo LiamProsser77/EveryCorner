@@ -4,6 +4,23 @@
 
 EveryCorner is a social platform built around connecting people through profiles, friendships, and shared communities. Users can create a profile, share posts, connect with friends, and build their own corner of the internet.
 
+## Screenshots
+
+<p align="center">
+<img src="" />
+" width="800">
+</p>
+
+<p align="center">
+<img src="SCREENSHOT_LINK_2" width="800">
+</p>
+
+<p align="center">
+<img src="SCREENSHOT_LINK_3" width="800">
+</p>
+
+
+
 ## Features
 
 - 👤 Custom user profiles
