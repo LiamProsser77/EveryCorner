@@ -18,6 +18,11 @@ EveryCorner is a social platform built around connecting people through profiles
 <img src="https://github.com/user-attachments/assets/33670be8-2056-44ab-8bc9-e92d268d8367" width="600">
 </p>
 
+## Demo
+
+[Screen recording 2026-08-05 6.30.11 PM.webm](https://github.com/user-attachments/assets/fcac168e-b3d2-4786-aafe-02e240385eb2)
+
+
 
 ## Features
 
