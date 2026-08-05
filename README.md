@@ -26,4 +26,4 @@ No racist comments or words - If found or reported by email user will be banned 
 - User is forced to Logout
 
 
-#### Thank you to Supabase for making this possible!
+#### Thank you to Supabase and Github pages for making this possible!
