@@ -5,10 +5,10 @@ EveryCorner is the first social platform where groups—not individuals—are th
 
 ## Steps to make an account 
 
-. First, go to https://liamprosser77.github.io/EveryCorner/
+- First, go to https://liamprosser77.github.io/EveryCorner/
 
-. Next, press Create your corner
+- Next, press Create your corner
 
-. Then, Enter your Name, Email, and Password
+- Then, Enter your Name, Email, and Password
 
-. Your all set!
+- Your all set!
