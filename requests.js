@@ -1,6 +1,7 @@
-alert("requests.js loaded");
-
 // EveryCorner Friend Requests
+
+
+console.log("requests.js loaded");
 
 
 // ==========================
@@ -14,6 +15,8 @@ async function checkFriendRequests(){
 
 
     if(!user){
+
+        console.log("No user logged in");
 
         return;
 
@@ -38,7 +41,7 @@ async function checkFriendRequests(){
 
     if(error){
 
-        console.log(error);
+        console.log("Request error:", error);
 
         return;
 
@@ -46,7 +49,18 @@ async function checkFriendRequests(){
 
 
 
+    console.log(
+        "Incoming requests:",
+        data
+    );
+
+
+
     if(!data || data.length === 0){
+
+        console.log(
+            "No friend requests"
+        );
 
         return;
 
@@ -60,9 +74,12 @@ async function checkFriendRequests(){
     );
 
 
+
     if(!popup){
 
-        console.log("Popup HTML missing");
+        console.log(
+            "friendRequestPopup HTML missing"
+        );
 
         return;
 
@@ -73,19 +90,22 @@ async function checkFriendRequests(){
     popup.style.display = "block";
 
 
+
     popup.innerHTML = `
 
     <h3>Friend Request</h3>
 
     <p>
-    You have a friend request
+    You have a friend request!
     </p>
 
-    <button onclick="acceptRequest('${data[0].id}')">
+
+    <button>
     Accept
     </button>
 
-    <button onclick="declineRequest('${data[0].id}')">
+
+    <button>
     Decline
     </button>
 
@@ -97,6 +117,10 @@ async function checkFriendRequests(){
 
 
 
+
+// ==========================
+// START
+// ==========================
 
 window.addEventListener(
 "load",
