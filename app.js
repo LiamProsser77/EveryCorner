@@ -1,5 +1,5 @@
 // EveryCorner App.js
-// Clean Version
+// Clean Custom Profile URL Version
 
 
 // ==========================
@@ -89,8 +89,9 @@ async function createAccount(event){
     alert("Account created!");
 
 
+
     window.location.href =
-    "profile.html";
+    "profile.html?user=" + username;
 
 }
 
@@ -137,8 +138,22 @@ async function signIn(event){
 
 
 
+    const user =
+    await getCurrentUser();
+
+
+
+    const { data } =
+    await supabaseClient
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .single();
+
+
+
     window.location.href =
-    "profile.html";
+    "profile.html?user=" + data.username;
 
 }
 
@@ -147,7 +162,7 @@ async function signIn(event){
 
 
 // ==========================
-// GET USER
+// GET CURRENT USER
 // ==========================
 
 async function getCurrentUser(){
@@ -182,52 +197,26 @@ async function loadProfile(){
 
 
 
-    let query =
-    supabaseClient
-    .from("profiles")
-    .select("*");
+    if(!username){
 
+        document.getElementById("cornerName").innerHTML =
+        "No profile selected";
 
-
-    if(username){
-
-        query =
-        query.eq(
-            "username",
-            username
-        );
-
-    }
-
-    else{
-
-
-        const user =
-        await getCurrentUser();
-
-
-        if(!user){
-
-            document.getElementById("cornerName").innerHTML =
-            "Sign in first";
-
-            return;
-
-        }
-
-
-        query =
-        query.eq(
-            "id",
-            user.id
-        );
+        return;
 
     }
 
 
 
     const { data, error } =
-    await query.single();
+    await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq(
+        "username",
+        username
+    )
+    .single();
 
 
 
@@ -256,12 +245,8 @@ async function loadProfile(){
 
 
 
-    if(data.picture){
-
-        document.getElementById("profilePic").src =
-        data.picture;
-
-    }
+    document.getElementById("profilePic").src =
+    data.picture || "everycorner.png";
 
 
 
@@ -464,7 +449,7 @@ async function uploadBanner(event){
 
 
 // ==========================
-// SAVE PROFILE NAME
+// SAVE USERNAME
 // ==========================
 
 async function saveProfile(){
@@ -517,7 +502,10 @@ async function saveProfile(){
 
     alert("Profile updated!");
 
-    location.reload();
+
+
+    window.location.href =
+    "profile.html?user=" + username;
 
 }
 
