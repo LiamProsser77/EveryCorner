@@ -1,5 +1,5 @@
 // EveryCorner Friend System
-// Instant Friends + Followers
+// Search users + Instant Friends
 
 
 // ==========================
@@ -13,8 +13,10 @@ async function searchUsers(){
     document.getElementById("searchUsers").value.trim();
 
 
+
     const results =
     document.getElementById("searchResults");
+
 
 
     if(search === ""){
@@ -62,17 +64,36 @@ async function searchUsers(){
         document.createElement("div");
 
 
+
         box.innerHTML = `
 
+        <img 
+        src="${user.picture || "everycorner.png"}"
+        width="50"
+        height="50"
+        style="border-radius:50%"
+        >
+
+
         <p>
+
+        <a href="profile.html?user=${user.username}">
         ${user.username}
+        </a>
+
         </p>
 
+
+
         <button onclick="addFriend('${user.id}')">
+
         Add Friend
+
         </button>
 
+
         `;
+
 
 
         results.appendChild(box);
@@ -111,9 +132,7 @@ async function addFriend(otherUserID){
 
     if(user.id === otherUserID){
 
-        alert(
-            "You cannot add yourself"
-        );
+        alert("You cannot add yourself");
 
         return;
 
@@ -121,7 +140,42 @@ async function addFriend(otherUserID){
 
 
 
-    // Create friendship
+    // Check if already friends
+
+    const { data: existing } =
+    await supabaseClient
+    .from("friends")
+    .select("*")
+    .or(
+        "user1.eq." + user.id +
+        ",user2.eq." + user.id
+    );
+
+
+
+    const alreadyFriend =
+    existing.some(friend =>
+
+        friend.user1 === otherUserID ||
+        friend.user2 === otherUserID
+
+    );
+
+
+
+    if(alreadyFriend){
+
+        alert("Already friends!");
+
+        return;
+
+    }
+
+
+
+
+
+    // Add friendship
 
     const { error: friendError } =
     await supabaseClient
@@ -147,7 +201,8 @@ async function addFriend(otherUserID){
 
 
 
-    // Create follower connection
+
+    // Add follower
 
     const { error: followError } =
     await supabaseClient
@@ -170,12 +225,7 @@ async function addFriend(otherUserID){
 
 
 
-    alert(
-        "Friend added!"
-    );
-
-
-    location.reload();
+    alert("Friend added!");
 
 
 }
