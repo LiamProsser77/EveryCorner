@@ -1,5 +1,5 @@
 // EveryCorner App.js
-// Clean Supabase Version
+// Clean Version
 
 
 // ==========================
@@ -88,6 +88,7 @@ async function createAccount(event){
 
     alert("Account created!");
 
+
     window.location.href =
     "profile.html";
 
@@ -146,7 +147,7 @@ async function signIn(event){
 
 
 // ==========================
-// GET CURRENT USER
+// GET USER
 // ==========================
 
 async function getCurrentUser(){
@@ -170,28 +171,63 @@ async function getCurrentUser(){
 async function loadProfile(){
 
 
-    const user =
-    await getCurrentUser();
+    const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+    const username =
+    params.get("user");
 
 
 
-    if(!user){
+    let query =
+    supabaseClient
+    .from("profiles")
+    .select("*");
 
-        document.getElementById("cornerName").innerHTML =
-        "Sign in first";
 
-        return;
+
+    if(username){
+
+        query =
+        query.eq(
+            "username",
+            username
+        );
+
+    }
+
+    else{
+
+
+        const user =
+        await getCurrentUser();
+
+
+        if(!user){
+
+            document.getElementById("cornerName").innerHTML =
+            "Sign in first";
+
+            return;
+
+        }
+
+
+        query =
+        query.eq(
+            "id",
+            user.id
+        );
 
     }
 
 
 
     const { data, error } =
-    await supabaseClient
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
+    await query.single();
 
 
 
@@ -199,8 +235,10 @@ async function loadProfile(){
 
         console.log(error);
 
+
         document.getElementById("cornerName").innerHTML =
         "Profile not found";
+
 
         return;
 
@@ -237,24 +275,6 @@ async function loadProfile(){
 
 }
 
-
-
-
-
-// ==========================
-// LOGOUT
-// ==========================
-
-async function logout(){
-
-    await supabaseClient.auth.signOut();
-
-
-    window.location.href =
-    "signin.html";
-
-}
-
 // ==========================
 // UPLOAD PROFILE PICTURE
 // ==========================
@@ -272,8 +292,10 @@ async function uploadProfile(event){
     }
 
 
+
     const user =
     await getCurrentUser();
+
 
 
     if(!user){
@@ -364,8 +386,10 @@ async function uploadBanner(event){
     }
 
 
+
     const user =
     await getCurrentUser();
+
 
 
     if(!user){
@@ -450,6 +474,7 @@ async function saveProfile(){
     await getCurrentUser();
 
 
+
     if(!user){
 
         alert("Sign in first");
@@ -460,8 +485,8 @@ async function saveProfile(){
 
 
 
-    const name =
-    document.getElementById("nameInput").value;
+    const username =
+    document.getElementById("nameInput").value.trim();
 
 
 
@@ -470,7 +495,7 @@ async function saveProfile(){
     .from("profiles")
     .update({
 
-        username:name
+        username:username
 
     })
     .eq(
@@ -493,6 +518,24 @@ async function saveProfile(){
     alert("Profile updated!");
 
     location.reload();
+
+}
+
+
+
+
+
+// ==========================
+// LOGOUT
+// ==========================
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+
+    window.location.href =
+    "signin.html";
 
 }
 
