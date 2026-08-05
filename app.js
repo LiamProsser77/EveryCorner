@@ -544,5 +544,3 @@ window.onload = function(){
     }
 
 };
-
-};
