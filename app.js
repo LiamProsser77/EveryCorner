@@ -9,6 +9,10 @@
 
 async function createAccount(event){
 
+    alert("Signup button reached");
+
+    event.preventDefault();
+
     event.preventDefault();
 
 
