@@ -67,6 +67,18 @@ Breaking community rules may result in:
 - Forced logout
 - Account suspension or removal
 
+## Roadmap
+
+- [x] User profiles
+- [x] Friends system
+- [x] Posts
+- [x] Bios
+- [ ] Comments
+- [ ] Likes and reactions
+- [ ] Notifications
+- [ ] Mobile improvements
+
+
 ## Built With:
 
 <p align="center">
