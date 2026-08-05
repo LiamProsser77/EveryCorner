@@ -10,9 +10,7 @@ alert("requests.js loaded");
 async function checkFriendRequests(){
 
 
-    const user =
-    await getCurrentUser();
-
+    const user = await getCurrentUser();
 
 
     if(!user){
@@ -48,34 +46,50 @@ async function checkFriendRequests(){
 
 
 
-   const popup =
-document.getElementById(
-"friendRequestPopup"
-);
+    if(!data || data.length === 0){
 
-
-popup.style.display="block";
-
-
-popup.innerHTML = `
-
-<h3>Friend Request</h3>
-
-<p>
-You have a friend request
-</p>
-
-<button onclick="acceptRequest('${data[0].id}')">
-Accept
-</button>
-
-<button onclick="declineRequest('${data[0].id}')">
-Decline
-</button>
-
-`;
+        return;
 
     }
+
+
+
+    const popup =
+    document.getElementById(
+        "friendRequestPopup"
+    );
+
+
+    if(!popup){
+
+        console.log("Popup HTML missing");
+
+        return;
+
+    }
+
+
+
+    popup.style.display = "block";
+
+
+    popup.innerHTML = `
+
+    <h3>Friend Request</h3>
+
+    <p>
+    You have a friend request
+    </p>
+
+    <button onclick="acceptRequest('${data[0].id}')">
+    Accept
+    </button>
+
+    <button onclick="declineRequest('${data[0].id}')">
+    Decline
+    </button>
+
+    `;
 
 
 }
