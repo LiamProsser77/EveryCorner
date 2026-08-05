@@ -46,11 +46,32 @@ async function checkFriendRequests(){
 
 
 
-    if(data.length > 0){
+   const popup =
+document.getElementById(
+"friendRequestPopup"
+);
 
-        alert(
-            "You have a new friend request!"
-        );
+
+popup.style.display="block";
+
+
+popup.innerHTML = `
+
+<h3>Friend Request</h3>
+
+<p>
+You have a friend request
+</p>
+
+<button onclick="acceptRequest('${data[0].id}')">
+Accept
+</button>
+
+<button onclick="declineRequest('${data[0].id}')">
+Decline
+</button>
+
+`;
 
     }
 
