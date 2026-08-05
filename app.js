@@ -173,20 +173,97 @@ async function getCurrentUser(){
 
 async function loadProfile(){
 
+    let params = new URLSearchParams(
+        window.location.search
+    );
 
-    let user =
-    await getCurrentUser();
+
+    let username =
+    params.get("user");
+
+
+    let query =
+    supabaseClient
+    .from("profiles")
+    .select("*");
 
 
 
-    if(!user){
+    if(username){
+
+        query =
+        query.eq(
+            "username",
+            username
+        );
+
+    } else {
+
+
+        let user =
+        await getCurrentUser();
+
+
+        if(!user){
+
+            document.getElementById("cornerName").innerHTML =
+            "Sign in first";
+
+            return;
+
+        }
+
+
+        query =
+        query.eq(
+            "id",
+            user.id
+        );
+
+    }
+
+
+
+    let {data,error} =
+    await query.single();
+
+
+
+    if(error){
+
+        console.log(error);
 
         document.getElementById("cornerName").innerHTML =
-        "Sign in first";
+        "Profile not found";
 
         return;
 
     }
+
+
+
+    document.getElementById("cornerName").innerHTML =
+    data.username;
+
+
+
+    if(document.getElementById("profilePic")){
+
+        document.getElementById("profilePic").src =
+        data.picture || "everycorner.png";
+
+    }
+
+
+
+    if(document.getElementById("banner")){
+
+        document.getElementById("banner").style.backgroundImage =
+        "url('" + data.banner + "')";
+
+    }
+
+}
 
 
 
