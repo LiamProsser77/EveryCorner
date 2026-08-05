@@ -1,3 +1,5 @@
+alert("requests.js loaded");
+
 // EveryCorner Friend Requests
 
 
