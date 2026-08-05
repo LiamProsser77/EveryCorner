@@ -25,14 +25,23 @@ async function createAccount(event){
 
 
 
-    const { data, error } =
-    await supabaseClient.auth.signUp({
+   const { data, error } =
+await supabaseClient.auth.signUp({
 
-        email: email,
+    email: email,
 
-        password: password
+    password: password
 
-    });
+});
+
+
+if(!data.user){
+
+    alert("Account created. Please check your email or sign in.");
+
+    return;
+
+}
 
 
 
