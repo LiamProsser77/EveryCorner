@@ -2,3 +2,13 @@
 
 # EveryCorner
 EveryCorner is the first social platform where groups—not individuals—are the social identity. Create or join a group, collaborate on posts, and grow one shared community together.
+
+## Steps to make an account 
+
+. First, go to https://liamprosser77.github.io/EveryCorner/
+
+. Next, press Create your corner
+
+. Then, Enter your Name, Email, and Password
+
+. Your all set!
