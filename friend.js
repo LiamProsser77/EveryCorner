@@ -122,7 +122,7 @@ async function sendFriendRequest(receiverID){
 
     const { error } =
     await supabaseClient
-    .from("friend_requests")
+    .from("join_requests")
     .insert({
 
         sender:current.id,
