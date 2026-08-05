@@ -1,31 +1,63 @@
-<img width="1100" height="250" alt="everycorner" src="https://github.com/user-attachments/assets/15ea84a5-a763-42d2-b246-b17ae8cd9f84" />
+<img width="1100" height="230" alt="everycorner" src="https://github.com/user-attachments/assets/15ea84a5-a763-42d2-b246-b17ae8cd9f84" />
 
 # EveryCorner
-EveryCorner is the first social platform where groups—not individuals—are the social identity. Create or join a group, collaborate on posts, and grow one shared community together.
 
-## Steps to make an account 
+EveryCorner is a social platform built around connecting people through profiles, friendships, and shared communities. Users can create a profile, share posts, connect with friends, and build their own corner of the internet.
 
-- First, go to https://liamprosser77.github.io/EveryCorner/
+## Features
 
-- Next, press Create your corner
+- 👤 Custom user profiles
+- 🖼️ Profile pictures and banners
+- ✍️ Personal bios
+- 🤝 Friend connections
+- 🔎 User search
+- 📝 Create and view posts
+- 🔒 Profile editing protection
 
-- Then, Enter your Name, Email, and Password
+## Create an Account
 
-- Your all set!
+1. Visit:
+https://liamprosser77.github.io/EveryCorner/
 
-## EveryCorner's Policy's 
+2. Select **Create Your Corner**
 
-Be kind - EveryCorner takes this seriously be kind to others, and show respect.
+3. Enter your:
+   - Username
+   - Email
+   - Password
 
-No racist comments or words - If found or reported by email user will be banned right away.
+4. Start building your EveryCorner profile!
 
-No politics in any of EveryCorner's corners.
+## Community Policies
 
-## What happens when these are broken?
+### Be Kind
+EveryCorner values respectful conversations. Treat other users with respect.
 
-- User gets a restricted account
-- User is banned
-- User is forced to Logout
+### No Hate Speech
+Racist, hateful, or discriminatory content is not allowed. Reported accounts may be restricted or banned.
 
+### No Politics
+EveryCorner focuses on communities and connections, not political debates.
 
-#### Thank you to Supabase and Github pages for making this possible!
+## Enforcement
+
+Breaking community rules may result in:
+
+- Account restrictions
+- Forced logout
+- Account suspension or removal
+
+## Built With:
+
+<p align="center">
+<img src="https://skillicons.dev/icons?i=javascript,html,css,github,supabase" />
+</p>
+
+- JavaScript for application logic
+- HTML/CSS for the interface
+- Supabase for authentication, database, and storage
+- GitHub Pages for hosting
+
+## Thanks
+
+Thank you to Supabase and GitHub Pages for helping make EveryCorner possible.
