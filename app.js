@@ -24,21 +24,14 @@ async function createAccount(event){
 
 
 
-    const { data: uploadData, error } =
-await supabaseClient
-.storage
-.from("profiles")
-.upload(
-    filePath,
-    file,
-    {
-        upsert:true
-    }
-);
+    const { data, error } =
+    await supabaseClient.auth.signUp({
 
+        email: email,
 
-console.log(uploadData);
-console.log(error);
+        password: password
+
+    });
 
 
 
@@ -54,7 +47,7 @@ console.log(error);
 
     if(!data.user){
 
-        alert("Check your email to confirm your account.");
+        alert("Check your email confirmation.");
 
         return;
 
@@ -103,6 +96,7 @@ console.log(error);
 
 
 
+
 // ==========================
 // SIGN IN
 // ==========================
@@ -112,10 +106,8 @@ async function signIn(event){
     event.preventDefault();
 
 
-
     const email =
     document.getElementById("email").value;
-
 
 
     const password =
@@ -159,13 +151,17 @@ async function signIn(event){
 
 async function getCurrentUser(){
 
-    const {data} =
+    const { data } =
     await supabaseClient.auth.getUser();
 
 
     return data.user;
 
 }
+
+
+
+
 
 // ==========================
 // LOAD PROFILE
@@ -181,15 +177,8 @@ async function loadProfile(){
 
     if(!user){
 
-        const name =
-        document.getElementById("cornerName");
-
-        if(name){
-
-            name.innerHTML =
-            "Sign in first";
-
-        }
+        document.getElementById("cornerName").innerHTML =
+        "Sign in first";
 
         return;
 
@@ -224,32 +213,24 @@ async function loadProfile(){
 
 
 
-    if(document.getElementById("followers")){
-
-        document.getElementById("followers").innerHTML =
-        data.followers + " Followers";
-
-    }
+    document.getElementById("followers").innerHTML =
+    data.followers + " Followers";
 
 
 
-    if(document.getElementById("profilePic")){
+    if(data.picture){
 
         document.getElementById("profilePic").src =
-        data.picture || "everycorner.png";
+        data.picture;
 
     }
 
 
 
-    if(document.getElementById("banner")){
+    if(data.banner){
 
-        if(data.banner){
-
-            document.getElementById("banner").style.backgroundImage =
-            "url('" + data.banner + "')";
-
-        }
+        document.getElementById("banner").style.backgroundImage =
+        "url('" + data.banner + "')";
 
     }
 
@@ -266,34 +247,33 @@ async function loadProfile(){
 
 async function logout(){
 
-
     await supabaseClient.auth.signOut();
 
 
     window.location.href =
     "signin.html";
 
-
 }
 
-
-
-
-
 // ==========================
-// TEST UPLOAD BUTTON
+// UPLOAD PROFILE PICTURE
 // ==========================
 
 async function uploadProfile(event){
 
-    const file = event.target.files[0];
+    const file =
+    event.target.files[0];
+
 
     if(!file){
+
         return;
+
     }
 
 
-    const user = await getCurrentUser();
+    const user =
+    await getCurrentUser();
 
 
     if(!user){
@@ -305,8 +285,10 @@ async function uploadProfile(event){
     }
 
 
+
     const filePath =
     user.id + "/profile.png";
+
 
 
     const { error } =
@@ -322,6 +304,7 @@ async function uploadProfile(event){
     );
 
 
+
     if(error){
 
         alert(error.message);
@@ -329,6 +312,7 @@ async function uploadProfile(event){
         return;
 
     }
+
 
 
     const { data } =
@@ -352,6 +336,7 @@ async function uploadProfile(event){
     );
 
 
+
     alert("Profile picture saved!");
 
     location.reload();
@@ -359,17 +344,160 @@ async function uploadProfile(event){
 }
 
 
+
+
+
 // ==========================
-// TEST USER
+// UPLOAD BANNER
 // ==========================
 
-async function testUser(){
+async function uploadBanner(event){
 
-    const { data } = await supabaseClient.auth.getUser();
+    const file =
+    event.target.files[0];
 
-    alert(JSON.stringify(data.user));
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const user =
+    await getCurrentUser();
+
+
+    if(!user){
+
+        alert("Sign in first");
+
+        return;
+
+    }
+
+
+
+    const filePath =
+    user.id + "/banner.png";
+
+
+
+    const { error } =
+    await supabaseClient
+    .storage
+    .from("profiles")
+    .upload(
+        filePath,
+        file,
+        {
+            upsert:true
+        }
+    );
+
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+
+    const { data } =
+    supabaseClient
+    .storage
+    .from("profiles")
+    .getPublicUrl(filePath);
+
+
+
+    await supabaseClient
+    .from("profiles")
+    .update({
+
+        banner:data.publicUrl
+
+    })
+    .eq(
+        "id",
+        user.id
+    );
+
+
+
+    alert("Banner saved!");
+
+    location.reload();
 
 }
+
+
+
+
+
+// ==========================
+// SAVE PROFILE NAME
+// ==========================
+
+async function saveProfile(){
+
+
+    const user =
+    await getCurrentUser();
+
+
+    if(!user){
+
+        alert("Sign in first");
+
+        return;
+
+    }
+
+
+
+    const name =
+    document.getElementById("nameInput").value;
+
+
+
+    const { error } =
+    await supabaseClient
+    .from("profiles")
+    .update({
+
+        username:name
+
+    })
+    .eq(
+        "id",
+        user.id
+    );
+
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+
+    alert("Profile updated!");
+
+    location.reload();
+
+}
+
+
+
 
 
 // ==========================
@@ -378,10 +506,14 @@ async function testUser(){
 
 window.onload = function(){
 
-    if(document.getElementById("cornerName")){
+
+    if(
+        document.getElementById("cornerName")
+    ){
 
         loadProfile();
 
     }
+
 
 };
