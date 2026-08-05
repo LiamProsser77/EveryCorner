@@ -543,17 +543,6 @@ window.onload = function(){
 
     }
 
-    loadFriendCount();
-
 };
-
-    if(
-        document.getElementById("cornerName")
-    ){
-
-        loadProfile();
-
-    }
-
 
 };
