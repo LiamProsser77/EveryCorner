@@ -1,4 +1,5 @@
 // EveryCorner Friend System
+// Instant Friends + Followers
 
 
 // ==========================
@@ -29,7 +30,9 @@ async function searchUsers(){
     const { data, error } =
     await supabaseClient
     .from("profiles")
-    .select("id, username, picture")
+    .select(
+        "id, username, picture"
+    )
     .ilike(
         "username",
         "%" + search + "%"
@@ -65,13 +68,9 @@ async function searchUsers(){
         ${user.username}
         </p>
 
-        <button onclick="sendFriendRequest('${user.id}')">
+        <button onclick="addFriend('${user.id}')">
         Add Friend
         </button>
-
-        <a href="profile.html?user=${user.username}">
-        View Corner
-        </a>
 
         `;
 
@@ -89,18 +88,18 @@ async function searchUsers(){
 
 
 // ==========================
-// SEND FRIEND REQUEST
+// ADD FRIEND
 // ==========================
 
-async function sendFriendRequest(receiverID){
+async function addFriend(otherUserID){
 
 
-    const current =
+    const user =
     await getCurrentUser();
 
 
 
-    if(!current){
+    if(!user){
 
         alert("Sign in first");
 
@@ -110,9 +109,11 @@ async function sendFriendRequest(receiverID){
 
 
 
-    if(current.id === receiverID){
+    if(user.id === otherUserID){
 
-        alert("You cannot add yourself");
+        alert(
+            "You cannot add yourself"
+        );
 
         return;
 
@@ -120,24 +121,24 @@ async function sendFriendRequest(receiverID){
 
 
 
-    const { error } =
+    // Create friendship
+
+    const { error: friendError } =
     await supabaseClient
-    .from("join_requests")
+    .from("friends")
     .insert({
 
-        sender:current.id,
+        user1:user.id,
 
-        receiver:receiverID,
-
-        status:"pending"
+        user2:otherUserID
 
     });
 
 
 
-    if(error){
+    if(friendError){
 
-        alert(error.message);
+        alert(friendError.message);
 
         return;
 
@@ -145,6 +146,36 @@ async function sendFriendRequest(receiverID){
 
 
 
-    alert("Friend request sent!");
+
+    // Create follower connection
+
+    const { error: followError } =
+    await supabaseClient
+    .from("followers")
+    .insert({
+
+        follower:user.id,
+
+        following:otherUserID
+
+    });
+
+
+
+    if(followError){
+
+        console.log(followError);
+
+    }
+
+
+
+    alert(
+        "Friend added!"
+    );
+
+
+    location.reload();
+
 
 }
