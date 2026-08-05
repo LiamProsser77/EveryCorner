@@ -274,6 +274,17 @@ async function logout(){
 
 
 // ==========================
+// TEST UPLOAD BUTTON
+// ==========================
+
+async function uploadProfile(event){
+
+    alert("upload button works");
+
+}
+
+
+// ==========================
 // PAGE START
 // ==========================
 
