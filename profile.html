@@ -50,8 +50,6 @@ color:#7b1e3a;
 
 
 
-
-
 .banner{
 
 height:280px;
@@ -60,23 +58,6 @@ background-size:cover;
 background-position:center;
 
 }
-
-
-.friend-popup{
-
-position:fixed;
-top:30px;
-right:30px;
-width:300px;
-background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:0 8px 25px rgba(0,0,0,.2);
-display:none;
-z-index:999;
-
-}
-
 
 
 
@@ -91,7 +72,6 @@ border-radius:25px;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
 
 }
-
 
 
 
@@ -147,7 +127,6 @@ border-radius:20px;
 
 
 
-
 input,textarea{
 
 width:100%;
@@ -160,13 +139,11 @@ border:1px solid #ddd;
 
 
 
-
 textarea{
 
 height:120px;
 
 }
-
 
 
 
@@ -180,8 +157,6 @@ border-left:5px solid #008c8c;
 border-radius:10px;
 
 }
-
-
 
 
 
@@ -199,13 +174,10 @@ margin-top:50px;
 
 </style>
 
-
 </head>
 
 
-
 <body>
-
 
 
 <header>
@@ -218,15 +190,10 @@ margin-top:50px;
 
 
 
-
-
 <div 
 id="banner"
 class="banner">
 </div>
-
-
-<div id="friendRequestPopup" class="friend-popup"></div>
 
 
 
@@ -235,17 +202,26 @@ class="banner">
 
 <h2>Find Corners</h2>
 
-<input 
+
+<input
+
 id="searchUsers"
+
 placeholder="Search users..."
+
 oninput="searchUsers()">
+
 
 
 <div id="searchResults"></div>
 
+
 </div>
 
-  <div class="profile">
+
+
+
+<div class="profile">
 
 
 <img
@@ -254,11 +230,7 @@ id="profilePic"
 
 class="profile-picture"
 
-src="everycorner.png"
-
->
-
-
+src="everycorner.png">
 
 
 <h2 id="cornerName">
@@ -269,7 +241,6 @@ Loading...
 
 
 
-
 <p id="followers">
 
 0 Followers
@@ -277,6 +248,11 @@ Loading...
 </p>
 
 
+<p id="friends">
+
+0 Friends
+
+</p>
 
 
 <button
@@ -290,9 +266,6 @@ Follow
 </button>
 
 
-
-
-
 <button
 
 onclick="logout()">
@@ -301,19 +274,15 @@ Logout
 
 </button>
 
+
 <button onclick="testUser()">
+
 Test User
+
 </button>
 
 
-
 </div>
-
-
-
-
-
-
 
 
 <div
@@ -328,7 +297,6 @@ id="settings">
 Corner Settings
 
 </h2>
-
 
 
 
@@ -347,7 +315,6 @@ type="file"
 accept="image/*"
 
 onchange="uploadProfile(event)">
-
 
 
 
@@ -401,8 +368,6 @@ Save Corner Name
 
 
 
-
-
 <div
 
 class="box"
@@ -430,6 +395,7 @@ placeholder="Write a post...">
 
 
 
+
 <button
 
 onclick="createPost()">
@@ -437,7 +403,6 @@ onclick="createPost()">
 Post
 
 </button>
-
 
 
 
@@ -459,7 +424,6 @@ id="posts">
 
 
 
-
 <footer>
 
 © 2026 EveryCorner
@@ -471,10 +435,12 @@ id="posts">
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="supabase.js"></script>
+
 <script src="app.js"></script>
+
 <script src="friend.js"></script>
-<script src="requests.js"></script>
 
 
 </body>
