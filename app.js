@@ -46,21 +46,33 @@ async function createAccount(event){
 
 
 
-    await supabaseClient
-    .from("profiles")
-    .insert({
+    let { error: profileError } =
+await supabaseClient
+.from("profiles")
+.insert({
 
-        id: data.user.id,
+    id: data.user.id,
 
-        username: username,
+    username: username,
 
-        email: email,
+    email: email,
 
-        picture: "everycorner.png",
+    picture: "everycorner.png",
 
-        banner: "",
+    banner: "",
 
-        followers: 0
+    followers: 0
+
+});
+
+
+if(profileError){
+
+    alert(profileError.message);
+
+    return;
+
+}
 
     });
 
