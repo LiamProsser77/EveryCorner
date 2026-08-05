@@ -353,17 +353,28 @@ async function uploadProfile(event){
 
 
 // ==========================
+// TEST USER
+// ==========================
+
+async function testUser(){
+
+    const { data } = await supabaseClient.auth.getUser();
+
+    alert(JSON.stringify(data.user));
+
+}
+
+
+// ==========================
 // PAGE START
 // ==========================
 
 window.onload = function(){
-
 
     if(document.getElementById("cornerName")){
 
         loadProfile();
 
     }
-
 
 };
