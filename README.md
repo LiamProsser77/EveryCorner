@@ -19,6 +19,8 @@ Be kind - EveryCorner takes this seriously be kind to others, and show respect.
 
 No racist comments or words - If found or reported by email user will be banned right away.
 
+No politics in any of EveryCorner's corners.
+
 ## What happens when these are broken?
 
 - User gets a restricted account
