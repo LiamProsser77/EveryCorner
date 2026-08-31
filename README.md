@@ -2,7 +2,7 @@
 
 # EveryCorner
 
-EveryCorner is a social platform built around connecting people through profiles, friendships, and shared communities. Users can create a profile, share posts, connect with friends, and build their own corner of the internet.
+EveryCorner is a social platform built around connecting people through profiles, friendships, and shared communities. Users can create a profile, share posts, connect with friends, and build their own corner of the internet. 
 
 ## Screenshots
 
